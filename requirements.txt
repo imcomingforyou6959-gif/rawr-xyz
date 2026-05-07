@@ -1,19 +1,10 @@
-# Core Dependencies
-discord.py==2.3.2
-aiohttp==3.9.3
+# Core
+discord.py>=2.3.0
+aiohttp>=3.8.0
 
-# AWS Support (for DynamoDB storage)
-boto3==1.34.69
-
-# WebSocket Support (for SSE)
-websockets==12.0
-
-# Environment Variables
-python-dotenv==1.0.1
-
-# Logging & Monitoring
-colorlog==6.8.2
-prometheus-client==0.19.0
-
-# Utility
-python-dateutil==2.9.0.post0
+# Optional – remove or comment out if you don't need them
+textblob>=0.17.0          # for sentiment analysis (enable with ENABLE_SENTIMENT=true)
+redis>=4.5.0              # for Redis caching (enable with ENABLE_REDIS=true)
+asyncpg>=0.28.0           # for PostgreSQL storage (enable with ENABLE_POSTGRES=true)
+structlog>=23.0.0         # prettier structured logs
+sentry-sdk>=1.30.0        # error tracking (needs SENTRY_DSN env)
