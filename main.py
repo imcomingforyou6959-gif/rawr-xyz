@@ -1,22 +1,3 @@
-"""
-RawrBot v2.0.0 – Production Discord Support Bot
-================================================
-Features:
-  • Long‑term memory (Redis + PostgreSQL)
-  • Sentiment‑based tonal adaptation + local LLM (Ollama)
-  • Full ticket lifecycle + intelligent auto‑close
-  • Web chat broadcast via SSE
-  • GitHub persistent storage for whitelist/blacklist/logs
-  • Advanced rate limiting (distributed / local fallback)
-  • Human‑like, friendly replies – never robotic
-  • Anti‑duplicate ticket creation, interaction timeout safety
-
-Environment:
-  BOT_TOKEN (secret), GUILD_ID, OWNER_ID, STAFF_ROLE_ID, MANAGER_ROLE_ID,
-  MODERATOR_ROLE_ID, TICKET_CATEGORY_ID, REVIEW_CHANNEL_ID, STORAGE_TOKEN (secret),
-  REDIS_URL, DATABASE_URL, OLLAMA_URL (optional), SENTRY_DSN (optional)
-"""
-
 import os, sys, asyncio, json, time, base64, hashlib, logging, re
 from typing import Optional, Set, Dict, Any, List, Tuple, Callable, Union
 from datetime import datetime, timezone, timedelta
