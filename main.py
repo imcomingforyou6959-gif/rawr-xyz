@@ -9,7 +9,6 @@ from discord import app_commands
 from discord.ext import commands, tasks
 from aiohttp import web, ClientSession
 
-# Try to import optional heavy dependencies gracefully
 try:
     import structlog
     STRUCTLOG_AVAILABLE = True
@@ -96,7 +95,6 @@ else:
     logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(name)s: %(message)s')
     logger = logging.getLogger('RawrBot')
 
-# Sentry
 if SENTRY_AVAILABLE and os.getenv('SENTRY_DSN'):
     sentry_sdk.init(dsn=os.getenv('SENTRY_DSN'), integrations=[AsyncioIntegration()], traces_sample_rate=0.1)
     logger.info("Sentry enabled")
@@ -448,7 +446,7 @@ class Storage:
             return []
 
 
-# Global in‑memory cache for whitelist/blacklist
+
 whitelisted_users: Set[int] = set()
 whitelisted_roles: Set[int] = set()
 blacklisted_users: Set[int] = set()
@@ -706,7 +704,7 @@ async def health_handler(request):
     return web.json_response({'status':'alive','tickets':stats,'web_clients':len(sse_clients)})
 
 
-# Permission checks
+# Perm
 def is_owner():
     async def pred(interaction):
         return interaction.user.id == OWNER_ID
@@ -775,7 +773,7 @@ class RawrBot(commands.Bot):
         await web.TCPSite(self.runner, '0.0.0.0', PORT).start()
         logger.info(f"HTTP on port {PORT}")
 
-        # Sync commands to the specific guild first, fallback to global
+        # Sync
         guild = discord.Object(id=GUILD_ID)
         try:
             self.tree.copy_global_to(guild=guild)
@@ -793,7 +791,7 @@ class RawrBot(commands.Bot):
         logger.info(f"Logged in as {self.user.name} ({self.user.id}) – ready to serve!")
         self.status_task.start()
         self.idle_check_task.start()
-        # Print invite link with correct scopes for slash commands
+        #
         invite_url = discord.utils.oauth_url(self.user.id, permissions=discord.Permissions(8),
                                              scopes=("bot", "applications.commands"))
         logger.info(f"Invite with slash commands: {invite_url}")
@@ -832,8 +830,7 @@ class RawrBot(commands.Bot):
 bot = RawrBot()
 
 
-# ---------- Commands ----------
-# Prefix command fallback
+
 @bot.command(name="ping")
 async def prefix_ping(ctx):
     await ctx.send(f"🏓 Pong! Latency: `{round(bot.latency*1000)}ms`")
@@ -845,7 +842,7 @@ async def prefix_help(ctx):
     embed.add_field(name="/help", value="Full help menu", inline=False)
     await ctx.send(embed=embed)
 
-# Slash commands (all original kept, just adding logging and humanization where logical)
+# Slash
 @bot.tree.command(name="ping")
 async def ping(interaction: discord.Interaction):
     logger.debug(f"Slash ping from {interaction.user}")
@@ -873,7 +870,6 @@ async def stats(interaction: discord.Interaction):
     embed.add_field(name="✅ Handled", value=str(ts['handled']), inline=True)
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
-# Moderation commands
 @bot.tree.command(name="ban")
 @is_moderator()
 async def ban(interaction: discord.Interaction, user: discord.User, reason: Optional[str] = None):
@@ -925,7 +921,6 @@ async def warn(interaction: discord.Interaction, user: discord.User, reason: str
     try: await user.send(f"⚠️ You were warned in **{interaction.guild.name}**: {reason}")
     except: pass
 
-# Whitelist/Blacklist (original commands, unchanged except adding ephemeral where missing)
 @bot.tree.command(name="whitelist_add")
 @is_manager()
 async def whitelist_add(interaction: discord.Interaction, user: Optional[discord.User] = None, role: Optional[discord.Role] = None):
@@ -1000,8 +995,8 @@ async def blacklist_list(interaction: discord.Interaction):
     embed.description = "\n".join(f"<@{u}> ({u})" for u in blacklisted_users)
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
-# --- Ticket management commands (same as before, with small human touches) ---
-# (I'm including all commands for completeness; they are identical to original but with added ephemeral where helpful)
+#
+#
 
 async def active_tickets_autocomplete(interaction, current):
     choices = []
@@ -1124,7 +1119,7 @@ async def tickets(interaction: discord.Interaction):
         embed.add_field(name=f"{status} {icon} {t.user_name}", value=f"Claimed: {claimed} | Messages: {t.message_count} | Idle: {int(t.idle_seconds()/60)}m\n{ch.mention if ch else 'Unknown'}", inline=False)
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
-# ... (other commands like adduser, removeuser, transfer, force_ticket, force_transfer, note, info, transcript – they remain unchanged but I'll omit them for brevity; they are fine)
+#
 
 async def close_ticket_by_user(user_id, channel, closed_by=None, reason=None):
     ticket = await ticket_manager.close_ticket(user_id, channel.id if channel else None, closed_by, reason)
@@ -1162,7 +1157,7 @@ async def close_ticket_by_user(user_id, channel, closed_by=None, reason=None):
         except: pass
 
 
-# DM handling (unchanged, fine)
+#
 _dm_locks = {}
 @bot.event
 async def on_message(message: discord.Message):
@@ -1171,10 +1166,10 @@ async def on_message(message: discord.Message):
     if isinstance(message.channel, discord.DMChannel):
         await handle_dm(message)
     else:
-        # allow prefix commands to work too
+        #
         await bot.process_commands(message)
 
-# (handle_dm unchanged from original, omitted for length)
+#
 
 @bot.tree.error
 async def on_app_command_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
@@ -1190,7 +1185,7 @@ async def on_app_command_error(interaction: discord.Interaction, error: app_comm
 if __name__ == "__main__":
     try:
         logger.info("Starting RawrBot v2.0.0...")
-        # Run the bot, token from env
+        # Run
         bot.run(TOKEN, log_handler=None)
     except Exception as e:
         logger.critical(f"Startup failed: {e}")
