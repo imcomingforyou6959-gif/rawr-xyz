@@ -20,7 +20,6 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-        /* */
         html, body, #root {
             margin: 0;
             padding: 0;
@@ -30,7 +29,6 @@
             min-height: 100vh;
             width: 100%;
         }
-        /* Ensure Tailwind */
         .tailwind-ready {
             visibility: visible;
         }
@@ -48,7 +46,6 @@
             background: rgba(239,68,68,0.12);
             border-left: 3px solid #ef4444;
         }
-        /* Ensure canvas doesn't block content */
         .rain-canvas {
             position: fixed;
             top: 0;
@@ -66,7 +63,6 @@
 <script type="text/babel">
     const { motion, AnimatePresence } = window.Motion;
 
-    //
     const CompatibilityBar = () => {
         const executors = [
             { name: "Xeno", status: "verified" },
@@ -94,7 +90,6 @@
         );
     };
 
-    //
     function ScriptBlock() {
         const [copied, setCopied] = React.useState(false);
         const [config, setConfig] = React.useState({
@@ -169,7 +164,6 @@
         );
     }
 
-    //
     const RainBackground = () => {
         const canvasRef = React.useRef(null);
         const animationRef = React.useRef(null);
@@ -221,7 +215,6 @@
         return <canvas ref={canvasRef} className="rain-canvas" />;
     };
 
-    //
     const LinkButton = ({ href, icon, label, external = true, className = "" }) => (
         <motion.a
             whileHover={{ scale: 1.05 }}
@@ -249,7 +242,6 @@
                 <RainBackground />
                 <div className="fixed inset-0 bg-gradient-to-tr from-background via-transparent to-primary/5 z-10 pointer-events-none" />
 
-                {/* */}
                 <motion.div 
                     id="announcement"
                     initial={{ opacity: 0, y: -30 }}
@@ -273,7 +265,6 @@
                     </div>
                 </motion.div>
 
-                {/*temp*/}
                 <AnimatePresence>
                     {showTopNotice && (
                         <motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }} className="fixed top-24 left-1/2 transform -translate-x-1/2 z-30 bg-primary/20 backdrop-blur-md border border-primary/30 rounded-lg sm:rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 text-[8px] sm:text-xs font-mono">
@@ -300,14 +291,12 @@
                         </h1>
                     </div>
 
-                    {/*M*/}
                     <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-10 sm:mb-14 w-full max-w-3xl">
                         <LinkButton href="https://github.com/imcomingforyou6959-gif/rawr.xyz" icon="fa-brands fa-github" label="Repository" />
                         <LinkButton href="https://www.youtube.com/@rawr.xy3" icon="fa-brands fa-youtube" label="YouTube" />
                         <LinkButton href="https://discord.com/invite/64VAka5RPK" icon="fa-brands fa-discord" label="Discord" />
                     </div>
 
-                    {/* Navigation */}
                     <div className="flex flex-wrap justify-center gap-3 mb-8">
                         <motion.a 
                             whileHover={{ scale: 1.02 }}
@@ -325,11 +314,9 @@
                         </motion.a>
                     </div>
 
-                    {/* SB Main */}
                     <ScriptBlock />
                 </motion.div>
 
-                {/* Footer */}
                 <footer className="mt-20 sm:mt-28 z-20 text-center select-none w-full max-w-4xl">
                     <div className="text-[8px] sm:text-[10px] font-mono text-white/15 tracking-[0.5em] sm:tracking-[0.8em] uppercase mb-4">
                         rawr.xyz / Made in 2026
@@ -353,11 +340,9 @@
         );
     }
 
-    // Ensure Tailwind
     document.addEventListener('DOMContentLoaded', () => {
         const rootEl = document.getElementById('root');
         if (rootEl) {
-            // Small delay
             setTimeout(() => {
                 rootEl.classList.add('tailwind-ready');
             }, 50);
