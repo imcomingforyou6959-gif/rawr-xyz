@@ -7,17 +7,14 @@
     <meta name="description" content="rawr.xyz server">
     <meta name="theme-color" content="#ef4444">
 
-    <!-- Your assets -->
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <!-- React (using working CDN) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Your config -->
     <script>
         tailwind.config = {
             theme: {
@@ -33,7 +30,6 @@
     </script>
 
     <style>
-        /* Quick fix: ensure root is visible */
         #root {
             width: 100%;
             min-height: 100vh;
@@ -44,7 +40,6 @@
             background: #050505;
             overflow-x: hidden;
         }
-        /* Ensure rain canvas is behind everything */
         .rain-canvas {
             position: fixed !important;
             top: 0 !important;
@@ -55,7 +50,6 @@
             pointer-events: none !important;
             opacity: 0.15 !important;
         }
-        /* All content goes above rain */
         .content-wrapper {
             position: relative;
             z-index: 10;
@@ -89,7 +83,6 @@
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
-        /* Fade in animation for components */
         .fade-in {
             animation: fadeIn 0.8s ease-out forwards;
         }
@@ -97,7 +90,6 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Copy button success state */
         .copy-success {
             animation: successPulse 0.5s ease;
         }
@@ -106,13 +98,57 @@
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
+        .footer-link {
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+        .footer-link:hover {
+            color: #ef4444;
+        }
+        .nav-tab {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-tab:hover {
+            color: white;
+        }
+        .nav-tab.active {
+            background: #ef4444;
+            color: black;
+        }
+        .script-card {
+            transition: all 0.3s ease;
+        }
+        .script-card:hover {
+            border-color: rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
+        }
+        .tag {
+            transition: all 0.3s ease;
+        }
+        .tag:hover {
+            color: white;
+            background: rgba(239, 68, 68, 0.2);
+        }
+        .link-button {
+            transition: all 0.3s ease;
+        }
+        .link-button:hover {
+            border-color: rgba(239, 68, 68, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .link-button:hover i {
+            color: #ef4444;
+        }
+        .link-button:hover span {
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script>
-        // --- SAFETY NET: Show error if React fails ---
         window.onerror = function(msg, url, line, col, error) {
             const root = document.getElementById('root');
             if (root) {
@@ -124,14 +160,12 @@
                             <summary>Technical Details</summary>
                             <pre style="margin-top:10px;background:#111;padding:10px;border-radius:4px;overflow:auto;max-height:200px;">${error?.stack || 'No stack trace available'}</pre>
                         </details>
-                        <p style="margin-top:30px;color:#444;font-size:12px;">Try refreshing or check your internet connection.</p>
                     </div>
                 `;
             }
             return true;
         };
 
-        // --- CHECK IF REACT LOADED ---
         if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
             document.getElementById('root').innerHTML = `
                 <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#050505;color:#ef4444;font-family:monospace;padding:20px;text-align:center;">
@@ -143,11 +177,8 @@
         }
     </script>
 
-    <!-- ========== YOUR COMPONENTS ========== -->
     <script>
-        // --- 1. RAIN BACKGROUND COMPONENT ---
-        const { useEffect, useRef } = React;
-
+        const { useEffect, useRef, useState } = React;
         const RainBackground = ({ speed = 1 }) => {
             const canvasRef = useRef(null);
             const mouse = useRef({ x: 0, y: 0 });
@@ -245,10 +276,9 @@
             });
         };
 
-        // --- 2. SCRIPT BLOCK COMPONENT (FIXED - No Framer Motion) ---
         const ScriptBlock = () => {
-            const [copied, setCopied] = React.useState(false);
-            const [config, setConfig] = React.useState({
+            const [copied, setCopied] = useState(false);
+            const [config, setConfig] = useState({
                 version: "LOADING...",
                 status: "CHECKING...",
                 statusColor: "gray"
@@ -256,7 +286,7 @@
 
             const scriptText = `loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()`;
 
-            React.useEffect(() => {
+            useEffect(() => {
                 const jsonUrl = `https://raw.githubusercontent.com/imcomingforyou6959-gif/rawr.xyl/refs/heads/main/status.json?t=${new Date().getTime()}`;
 
                 fetch(jsonUrl)
@@ -299,7 +329,6 @@
             const textColorClass = config.statusColor === "green" ? "text-green-500/80" : 
                                   config.statusColor === "red" ? "text-red-500/80" : "text-yellow-500/80";
 
-            // Compatibility Bar component
             const CompatibilityBar = () => {
                 const executors = ["Xeno", "Velocity", "Solara", "Volt", "Sirhurt", "Wave", "Madium", "Luna", "And Any Executor!"];
                 return React.createElement('div', { className: "mt-6 w-full max-w-lg px-2 fade-in" },
@@ -320,10 +349,8 @@
                 );
             };
 
-            // Main component render
             return React.createElement('div', { className: "flex flex-col items-center w-full" },
                 React.createElement('div', { className: "relative w-full max-w-lg bg-black/60 border border-white/10 rounded-xl overflow-hidden backdrop-blur-md shadow-2xl mt-8 fade-in" },
-                    // Header
                     React.createElement('div', { className: "flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/10" },
                         React.createElement('div', { className: "flex items-center gap-4" },
                             React.createElement('div', { className: "flex gap-1.5" },
@@ -341,7 +368,6 @@
                             React.createElement('span', { className: `text-[10px] font-mono uppercase tracking-widest font-bold ${textColorClass}` }, config.status)
                         )
                     ),
-                    // Body
                     React.createElement('div', { className: "p-6 relative group" },
                         React.createElement('div', { className: "bg-black/40 rounded-lg p-4 mb-4 border border-white/5 group-hover:border-primary/20 transition-colors" },
                             React.createElement('code', { className: "block font-mono text-[10px] md:text-xs text-primary/90 break-all leading-relaxed" },
@@ -361,12 +387,154 @@
             );
         };
 
-        // --- 3. MAIN APP ---
+        const ScriptsPage = () => {
+            const [copiedId, setCopiedId] = useState(null);
+
+            const scripts = [
+                {
+                    id: 1,
+                    name: "Universal Old",
+                    description: "outdated",
+                    version: "2.3.1",
+                    loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Universal.lua", true))()',
+                    tags: ["ALL-IN-ONE", "STABLE"]
+                },
+                {
+                    id: 2,
+                    name: "Hellmet",
+                    description: "things",
+                    version: "1.1.5",
+                    loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Hellmet.lua"))()',
+                    tags: ["ESP", "AIMBOT"]
+                },
+                {
+                    id: 3,
+                    name: "Prison Life",
+                    description: "prison",
+                    version: "4.9.7",
+                    loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()',
+                    tags: ["PRISON", "ESCAPE"]
+                },
+                {
+                    id: 4,
+                    name: "Rivals",
+                    description: "rival",
+                    version: "4.9.6",
+                    loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()',
+                    tags: ["PVP", "COMPETITIVE"]
+                },
+                {
+                    id: 5,
+                    name: "nil",
+                    description: "nil",
+                    version: "2.1.0",
+                    loadstring: 'new',
+                    tags: ["pcp", "pcp"]
+                },
+                {
+                    id: 6,
+                    name: "nil",
+                    description: "nil",
+                    version: "3.0.2",
+                    loadstring: 'nil',
+                    tags: ["nil", "placeholder"]
+                }
+            ];
+
+            const copyScript = async (scriptText, id) => {
+                try {
+                    if (navigator.clipboard && window.isSecureContext) {
+                        await navigator.clipboard.writeText(scriptText);
+                    } else {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = scriptText;
+                        textArea.style.position = "fixed";
+                        textArea.style.left = "-9999px";
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        document.execCommand('copy');
+                        textArea.remove();
+                    }
+                    setCopiedId(id);
+                    setTimeout(() => setCopiedId(null), 2000);
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                }
+            };
+
+            return React.createElement('div', { className: "relative z-20 w-full max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16" },
+                React.createElement('div', { className: "text-center mb-12 fade-in" },
+                    React.createElement('h2', { className: "text-4xl sm:text-5xl font-black font-mono text-white italic tracking-tight" },
+                        "Script ", React.createElement('span', { className: "text-primary" }, "Library")
+                    ),
+                    React.createElement('p', { className: "text-white/30 font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase mt-3" },
+                        "All scripts are regularly updated"
+                    )
+                ),
+                React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" },
+                    scripts.map((script) =>
+                        React.createElement('div', {
+                            key: script.id,
+                            className: "bg-black/40 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm script-card"
+                        },
+                            React.createElement('div', { className: "p-5" },
+                                React.createElement('div', { className: "flex items-start justify-between mb-3" },
+                                    React.createElement('h3', { className: "text-lg font-bold text-white group-hover:text-primary transition-colors" }, script.name),
+                                    React.createElement('span', { className: "text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded font-mono" }, script.version)
+                                ),
+                                React.createElement('p', { className: "text-white/60 text-sm mb-4 min-h-[40px]" }, script.description),
+                                React.createElement('div', { className: "flex flex-wrap gap-2 mb-4" },
+                                    script.tags.map(tag =>
+                                        React.createElement('span', {
+                                            key: tag,
+                                            className: "text-[9px] bg-white/5 text-white/40 px-2 py-0.5 rounded uppercase tracking-wider tag"
+                                        }, tag)
+                                    )
+                                ),
+                                React.createElement('div', { className: "bg-black/60 rounded-lg p-3 mb-3 border border-white/5 overflow-x-auto" },
+                                    React.createElement('code', { className: "text-primary/80 text-[10px] font-mono break-all select-all" }, script.loadstring)
+                                ),
+                                React.createElement('button', {
+                                    onClick: () => copyScript(script.loadstring, script.id),
+                                    className: "w-full py-2.5 bg-primary/10 hover:bg-primary text-primary hover:text-black border border-primary/20 rounded-lg font-bold text-[10px] tracking-wider uppercase transition-all flex items-center justify-center gap-2"
+                                },
+                                    React.createElement('i', { className: `fas ${copiedId === script.id ? 'fa-check' : 'fa-copy'} text-[10px]` }),
+                                    copiedId === script.id ? 'Copied!' : 'Copy Script'
+                                )
+                            )
+                        )
+                    )
+                ),
+                React.createElement('div', { className: "mt-12 text-center" },
+                    React.createElement('p', { className: "text-white/20 text-[9px] font-mono" },
+                        React.createElement('i', { className: "fas fa-shield-alt mr-2" }),
+                        "All scripts are regularly updated and tested for stability."
+                    )
+                )
+            );
+        };
+
+        const LinkButton = ({ href, icon, label, external = true }) => {
+            return React.createElement('a', {
+                href: href,
+                target: external ? "_blank" : "_self",
+                rel: external ? "noopener noreferrer" : "",
+                className: "flex items-center gap-3 sm:gap-4 px-6 sm:px-8 py-3 sm:py-4 bg-white/[0.02] border border-white/5 rounded-lg sm:rounded-2xl link-button backdrop-blur-sm"
+            },
+                React.createElement('i', { className: `${icon} text-white/30 group-hover:text-primary transition-colors text-lg sm:text-xl` }),
+                React.createElement('span', { className: "font-bold text-[11px] sm:text-[13px] tracking-tight text-white/60 group-hover:text-white transition-colors" }, label)
+            );
+        };
+
         const App = () => {
-            return React.createElement('div', { className: "min-h-screen w-full relative bg-background overflow-hidden" },
-                React.createElement(RainBackground, null),
-                React.createElement('div', { className: "scanline" }),
-                React.createElement('div', { className: "content-wrapper flex flex-col items-center justify-center" },
+            const [page, setPage] = useState('home');
+
+            const renderPage = () => {
+                if (page === 'scripts') {
+                    return React.createElement(ScriptsPage, null);
+                }
+                return React.createElement('div', { className: "flex flex-col items-center w-full max-w-4xl" },
                     React.createElement('img', {
                         src: "assets/logo.png",
                         alt: "rawr.xyz",
@@ -381,12 +549,68 @@
                             "Safety Security Execution"
                         )
                     ),
-                    React.createElement(ScriptBlock, null),
-                    React.createElement('footer', { className: "mt-12 text-center select-none" },
-                        React.createElement('div', { className: "text-[8px] sm:text-[10px] font-mono text-white/10 tracking-[0.5em] uppercase mb-3" },
+                    React.createElement('div', { className: "flex flex-wrap justify-center gap-3 sm:gap-5 mb-8" },
+                        React.createElement(LinkButton, { href: "https://discord.gg/eMpUQzFrNG", icon: "fa-brands fa-discord", label: "Community" }),
+                        React.createElement(LinkButton, { href: "https://github.com/imcomingforyou6959-gif/rawr.xyz", icon: "fa-brands fa-github", label: "Repository" }),
+                        React.createElement(LinkButton, { href: "https://www.youtube.com/@rawr.xy3", icon: "fa-brands fa-youtube", label: "Showcase" })
+                    ),
+                    React.createElement(ScriptBlock, null)
+                );
+            };
+
+            const navLinks = [
+                { id: 'home', label: 'Home', icon: 'fa-home' },
+                { id: 'scripts', label: 'Scripts', icon: 'fa-scroll' }
+            ];
+
+            return React.createElement('div', { className: "min-h-screen w-full relative bg-background overflow-hidden" },
+                React.createElement(RainBackground, null),
+                React.createElement('div', { className: "scanline" }),
+                React.createElement('div', { className: "content-wrapper flex flex-col items-center justify-center" },
+                    // Navigation
+                    React.createElement('div', { className: "relative z-20 flex gap-2 mb-8 bg-white/5 p-1 rounded-full border border-white/10" },
+                        navLinks.map(link =>
+                            React.createElement('button', {
+                                key: link.id,
+                                onClick: () => setPage(link.id),
+                                className: `px-6 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all nav-tab ${page === link.id ? 'active' : 'text-white/40 hover:text-white/80'}`
+                            },
+                                React.createElement('i', { className: `fas ${link.icon} mr-2` }),
+                                link.label
+                            )
+                        )
+                    ),
+                    renderPage(),
+                    React.createElement('footer', { className: "mt-16 sm:mt-24 z-20 text-center select-none w-full max-w-4xl" },
+                        React.createElement('div', { className: "text-[8px] sm:text-[10px] font-mono text-white/10 tracking-[0.5em] sm:tracking-[0.8em] uppercase mb-3" },
                             "rawr.xyz // find a way to live :3"
                         ),
-                        React.createElement('div', { className: "text-[7px] sm:text-[8px] font-mono text-white/10" },
+                        React.createElement('div', { className: "flex flex-wrap justify-center gap-3 sm:gap-6 text-[8px] sm:text-[9px] font-mono text-white/20 tracking-normal" },
+                            React.createElement('span', { className: "footer-link", onClick: () => setPage('home') }, "Home"),
+                            React.createElement('span', { className: "text-white/10" }, "•"),
+                            React.createElement('span', { className: "footer-link", onClick: () => setPage('scripts') }, "Scripts"),
+                            React.createElement('span', { className: "text-white/10" }, "•"),
+                            React.createElement('a', {
+                                href: "/tos.html",
+                                className: "footer-link hover:text-primary transition-colors"
+                            }, "Terms of Service"),
+                            React.createElement('span', { className: "text-white/10" }, "•"),
+                            React.createElement('a', {
+                                href: "/privacy.html",
+                                className: "footer-link hover:text-primary transition-colors"
+                            }, "Privacy Policy"),
+                            React.createElement('span', { className: "text-white/10" }, "•"),
+                            React.createElement('a', {
+                                href: "https://discord.gg/eMpUQzFrNG",
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                                className: "footer-link"
+                            },
+                                React.createElement('i', { className: "fab fa-discord mr-1" }),
+                                "Support"
+                            )
+                        ),
+                        React.createElement('div', { className: "text-[7px] sm:text-[8px] font-mono text-white/10 mt-3" },
                             "\u00A9 2026 rawr.xyz - All Rights Reserved"
                         )
                     )
@@ -394,7 +618,7 @@
             );
         };
 
-        // --- RENDER ---
+        // Render
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(React.createElement(App));
     </script>
