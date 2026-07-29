@@ -12,348 +12,317 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
         body { 
-            background-color: #050505; 
+            margin: 0;
+            background-color: #0a0a0a;
             color: white; 
             font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
+
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/dharmx/walls/blob/main/calm/a_large_waterfall_with_fog_and_trees.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.5) saturate(0.8);
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+        }
+
         .privacy-container {
             max-width: 900px;
             margin: 0 auto;
             padding: 2rem;
         }
+
         .section {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15, 15, 15, 0.4);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             transition: all 0.3s ease;
         }
+
         .section:hover {
-            border-color: rgba(239,68,68,0.3);
-            background: rgba(255,255,255,0.05);
+            background: rgba(20, 20, 20, 0.5);
+            border-color: rgba(239, 68, 68, 0.25);
+            transform: translateY(-2px);
         }
+
         .section h2 {
-            color: #ef4444;
+            color: #fca5a5;
             font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: 700;
         }
+
         .section h3 {
-            color: #ef4444;
+            color: #fca5a5;
             font-size: 1.2rem;
             margin-top: 1rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
+
         .section p {
             color: rgba(255,255,255,0.7);
             line-height: 1.6;
             margin-bottom: 1rem;
         }
+
         .section ul {
             color: rgba(255,255,255,0.7);
             list-style-type: disc;
             padding-left: 1.5rem;
             margin-bottom: 1rem;
         }
+
         .section li {
             margin-bottom: 0.5rem;
         }
+
         .back-button {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(239,68,68,0.1);
-            border: 1px solid rgba(239,68,68,0.3);
+            background: rgba(239, 68, 68, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
-            color: #ef4444;
+            color: #fca5a5;
             text-decoration: none;
             transition: all 0.3s ease;
             margin-bottom: 2rem;
         }
+
         .back-button:hover {
-            background: rgba(239,68,68,0.2);
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
             transform: translateX(-5px);
         }
+
         .effective-date {
             text-align: center;
             color: rgba(255,255,255,0.4);
             font-size: 0.875rem;
             margin-bottom: 2rem;
         }
+
         .badge {
             display: inline-block;
-            background: rgba(239,68,68,0.2);
-            color: #ef4444;
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
             margin-left: 0.5rem;
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
-        .table-container {
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.75rem;
-            text-align: left;
-            color: rgba(255,255,255,0.7);
-        }
-        th {
-            background: rgba(239,68,68,0.1);
-            color: #ef4444;
-            font-weight: 600;
-        }
+
         .highlight {
-            background: rgba(239,68,68,0.05);
-            border-left: 3px solid #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+            backdrop-filter: blur(8px);
+            border-left: 3px solid rgba(239, 68, 68, 0.5);
             padding: 1rem;
             margin: 1rem 0;
             border-radius: 8px;
         }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .fade-in-delay-1 { animation-delay: 0.2s; }
+        .fade-in-delay-2 { animation-delay: 0.4s; }
+        .fade-in-delay-3 { animation-delay: 0.6s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="privacy-container">
-        <a href="/" class="back-button">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-        
-        <h1 class="text-5xl font-bold text-center mb-4">Privacy Policy</h1>
-        <p class="effective-date">Last Updated: April 10, 2026 | Effective Date: April 20, 2026</p>
-        
-        <div class="highlight">
-            <p class="text-sm">📌 <strong>Quick Summary:</strong> We respect your privacy. We only collect data necessary to provide our services, never sell your personal information, and you have full control over your data.</p>
-        </div>
-        
-        <div class="section">
-            <h2>1. Information We Collect</h2>
-            <p>We collect information to provide better services to all our users. The types of information we collect include:</p>
+    <div class="bg-image"></div>
+    
+    <div class="content-layer">
+        <div class="privacy-container">
+            <a href="/" class="back-button fade-in">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
             
-            <h3>1.1 Information You Provide</h3>
-            <ul>
-                <li><strong>Account Information:</strong> Discord username, Discord ID, and server information when you use our support bot</li>
-                <li><strong>Communication Data:</strong> Messages sent through our support system, including DM content and ticket history</li>
-                <li><strong>Feedback and Reviews:</strong> Ratings and comments you submit about our service</li>
-                <li><strong>Support Requests:</strong> Any information you provide when contacting support</li>
-            </ul>
+            <h1 class="text-5xl font-bold text-center mb-4 fade-in fade-in-delay-1">Privacy Policy</h1>
+            <p class="effective-date fade-in fade-in-delay-1">Last Updated: July 29, 2026 | Effective Date: July 29, 2026</p>
             
-            <h3>1.2 Automatically Collected Information</h3>
-            <ul>
-                <li><strong>Usage Data:</strong> How you interact with our website and bot</li>
-                <li><strong>Device Information:</strong> Browser type, operating system, Geo Regions</li>
-                <li><strong>Timestamps:</strong> When you create tickets, send messages, or use our services</li>
-                <li><strong>Performance Data:</strong> Bot latency, error reports, and system performance</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>2. How We Use Your Information</h2>
-            <p>We use the information we collect for the following purposes:</p>
-            <ul>
-                <li><strong>Provide and maintain our services</strong> - Including ticket support, message delivery, and bot functionality</li>
-                <li><strong>Improve user experience</strong> - Analyzing usage patterns to enhance our services</li>
-                <li><strong>Communicate with you</strong> - Responding to support tickets and sending important updates</li>
-                <li><strong>Security</strong> - Detecting and preventing fraud, abuse, and security incidents</li>
-                <li><strong>Compliance</strong> - Fulfilling legal obligations and enforcing our terms of service</li>
-                <li><strong>Analytics</strong> - Understanding how users interact with our platform</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>3. Data Storage and Security</h2>
-            <p>We take data security seriously and implement appropriate measures to protect your information:</p>
-            <ul>
-                <li><strong>Encryption:</strong> Data is encrypted in transit using TLS/SSL</li>
-                <li><strong>Access Control:</strong> Only authorized staff members can access support tickets</li>
-                <li><strong>Secure Storage:</strong> Data is stored securely using AWS DynamoDB or encrypted local files</li>
-                <li><strong>Regular Backups:</strong> We maintain regular backups to prevent data loss</li>
-                <li><strong>Retention:</strong> Ticket data is retained for 30 days after closure, then deleted</li>
-            </ul>
-            
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>Data Type</th>
-                        <th>Storage Location</th>
-                        <th>Retention Period</th>
-                    </tr>
-                    <tr>
-                        <td>Ticket History</td>
-                        <td>AWS DynamoDB / Encrypted Files</td>
-                        <td>30 days after closure</td>
-                    </tr>
-                    <tr>
-                        <td>User Messages</td>
-                        <td>AWS DynamoDB / Encrypted Files</td>
-                        <td>30 days</td>
-                    </tr>
-                    <tr>
-                        <td>Whitelist/Blacklist</td>
-                        <td>AWS DynamoDB / Encrypted Files</td>
-                        <td>Until removed</td>
-                    </tr>
-                    <tr>
-                        <td>Logs</td>
-                        <td>Railway / Server Logs</td>
-                        <td>14 days</td>
-                    </tr>
-                </table>
+            <div class="highlight fade-in fade-in-delay-1">
+                <p class="text-sm" style="color: rgba(255,255,255,0.8);">📌 <strong>Quick Summary:</strong> We keep things simple. Due to our bot shutdown, we no longer store or process user data. The only data retained is key-related information stored in Polsec for authentication purposes.</p>
             </div>
-        </div>
-        
-        <div class="section">
-            <h2>4. Data Sharing and Disclosure</h2>
-            <p>We do not sell, trade, or rent your personal information to third parties. We may share information in the following circumstances:</p>
-            <ul>
-                <li><strong>With Staff Members:</strong> Support tickets are visible to authorized staff to provide assistance</li>
-                <li><strong>Legal Requirements:</strong> If required by law or to respond to legal process</li>
-                <li><strong>Service Providers:</strong> Trusted third parties who assist in operating our services (e.g., Railway, AWS)</li>
-                <li><strong>Protection of Rights:</strong> To protect the security or integrity of our services</li>
-            </ul>
-            <p class="text-sm mt-2">🔒 <strong>We NEVER sell your personal information to third parties.</strong></p>
-        </div>
-        
-        <div class="section">
-            <h2>5. Your Rights and Choices</h2>
-            <p>Depending on your location, you may have the following rights regarding your data:</p>
-            <ul>
-                <li><strong>Access:</strong> Request a copy of any data we collected from you</li>
-                <li><strong>Correction:</strong> Request correction of inaccurate data</li>
-                <li><strong>Deletion:</strong> Request deletion of your data (subject to legal obligations)</li>
-                <li><strong>Restriction:</strong> Request restriction of data processing</li>
-                <li><strong>Portability:</strong> Request transfer of your data to another service</li>
-                <li><strong>Opt-out:</strong> Opt-out of certain data collection</li>
-            </ul>
             
-            <div class="highlight">
-                <p><strong>📧 To exercise your rights:</strong> Contact us via Discord support ticket or email support@rawr.xyz. We will respond within 30 days.</p>
+            <div class="section fade-in fade-in-delay-2">
+                <h2>1. What Data We Keep</h2>
+                <p>Following the shutdown of our support bot, we have significantly reduced our data collection. Here's what we currently store:</p>
+                
+                <h3>1.1 Key Authentication Data (Polsec)</h3>
+                <ul>
+                    <li><strong>License Keys:</strong> Stored securely in Polsec for script authentication</li>
+                    <li><strong>Key Status:</strong> Active, expired, or revoked key information</li>
+                    <li><strong>Hardware IDs:</strong> Basic HWID for key binding purposes</li>
+                    <li><strong>Subscription Tiers:</strong> Access level associated with each key</li>
+                </ul>
+                
+                <h3>1.2 What We NO LONGER Collect</h3>
+                <ul>
+                    <li><strong>Ticket History:</strong> All support tickets have been deleted</li>
+                    <li><strong>User Messages:</strong> No DM or chat logs are stored</li>
+                    <li><strong>Discord Data:</strong> No usernames, IDs, or server information retained</li>
+                    <li><strong>Usage Analytics:</strong> No tracking of script usage or website visits</li>
+                    <li><strong>Performance Logs:</strong> All bot-related logs have been purged</li>
+                </ul>
             </div>
+            
+            <div class="section fade-in fade-in-delay-2">
+                <h2>2. How We Use Key Data</h2>
+                <p>The only data we maintain is used exclusively for:</p>
+                <ul>
+                    <li><strong>Script Authentication</strong> - Verifying valid license keys when scripts are executed</li>
+                    <li><strong>Access Control</strong> - Ensuring only authorized users can run our scripts</li>
+                    <li><strong>Security</strong> - Preventing key sharing and unauthorized distribution</li>
+                </ul>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-2">
+                <h2>3. Data Storage and Security</h2>
+                <p>All remaining data is handled through Polsec's secure infrastructure:</p>
+                <ul>
+                    <li><strong>Encryption:</strong> All key data is encrypted at rest and in transit</li>
+                    <li><strong>Third-Party Storage:</strong> Key data is managed entirely by Polsec's systems</li>
+                    <li><strong>No Local Storage:</strong> We maintain no local databases or file storage of user data</li>
+                    <li><strong>Minimal Retention:</strong> Only active key data is retained; expired keys are periodically purged</li>
+                </ul>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-3">
+                <h2>4. Data Sharing and Disclosure</h2>
+                <p>We do not sell, trade, or rent any information to third parties. The limited key data we have is:</p>
+                <ul>
+                    <li><strong>Never Sold:</strong> We do not monetize user data in any way</li>
+                    <li><strong>Stored Exclusively:</strong> Key data remains within Polsec's ecosystem</li>
+                    <li><strong>Legal Compliance:</strong> Only disclosed if required by valid legal process</li>
+                </ul>
+                <p class="text-sm mt-2" style="color: rgba(255,255,255,0.6);">🔒 <strong>We have never and will never sell any user information.</strong></p>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-3">
+                <h2>5. Your Rights and Choices</h2>
+                <p>Even with minimal data collection, you maintain full rights:</p>
+                <ul>
+                    <li><strong>Access:</strong> Request information about any key data associated with you</li>
+                    <li><strong>Deletion:</strong> Request removal of your key and associated data</li>
+                    <li><strong>Opt-out:</strong> Simply stop using our scripts to discontinue any data association</li>
+                </ul>
+                
+                <div class="highlight">
+                    <p style="color: rgba(255,255,255,0.8);"><strong>📧 To exercise your rights:</strong> Contact us via Discord or email rawr.xyl@gmail.com. Since we store minimal data, most requests can be fulfilled quickly.</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>6. Cookies and Tracking</h2>
+                <p>Our website uses minimal cookies:</p>
+                <ul>
+                    <li><strong>No Analytics:</strong> We do not use Google Analytics or similar tracking</li>
+                    <li><strong>No Advertising:</strong> We don't run ads or use tracking pixels</li>
+                    <li><strong>Session Only:</strong> Any temporary cookies expire when you close your browser</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>7. Third-Party Services</h2>
+                <p>We rely on minimal third-party services:</p>
+                <ul>
+                    <li><strong>Polsec:</strong> For license key management and authentication</li>
+                    <li><strong>GitHub:</strong> For hosting script files and version control</li>
+                    <li><strong>Discord:</strong> For community communication (no data stored by us)</li>
+                </ul>
+                <p>Each service has its own privacy policy. We encourage you to review them.</p>
+            </div>
+            
+            <div class="section">
+                <h2>8. Children's Privacy</h2>
+                <p>Our services are not directed to children under 13. We do not knowingly collect any personal information from children under 13.</p>
+            </div>
+            
+            <div class="section">
+                <h2>9. Bot Shutdown Notice</h2>
+                <p>As of our bot shutdown, the following changes took effect:</p>
+                <ul>
+                    <li>All support tickets and conversation logs have been permanently deleted</li>
+                    <li>No new user data is being collected through Discord</li>
+                    <li>Automated data collection systems have been disabled</li>
+                    <li>Previous databases have been wiped clean</li>
+                </ul>
+                <p>The only remaining active system is Polsec for key verification.</p>
+            </div>
+            
+            <div class="section">
+                <h2>10. Changes to This Privacy Policy</h2>
+                <p>We may update this policy as our services evolve. Changes will be posted here with an updated date. Major changes will be announced on our Discord server.</p>
+            </div>
+            
+            <div class="section">
+                <h2>11. Contact Information</h2>
+                <p>Questions about this policy or your data? Reach out:</p>
+                <ul>
+                    <li><strong>Discord:</strong> Join our community server</li>
+                    <li><strong>Email:</strong> rawr.xyl@gmail.com</li>
+                    <li><strong>Response Time:</strong> Usually within 24-48 hours</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>12. Consent</h2>
+                <p>By using our website and scripts, you acknowledge this privacy policy. Since we store virtually no personal data, your privacy is inherently protected. If you disagree with any part of this policy, please discontinue use of our services.</p>
+            </div>
+            
+            <footer style="text-align: center; color: rgba(255,255,255,0.15); font-size: 0.75rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                <p>&copy; 2026 rawr.xyz - All Rights Reserved</p>
+                <p style="margin-top: 0.5rem;">
+                    <a href="/" style="color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fca5a5'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Home</a> |
+                    <a href="/tos" style="color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fca5a5'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Terms of Service</a> |
+                    <a href="/privacy" style="color: #fca5a5; text-decoration: none;">Privacy Policy</a>
+                </p>
+                <p style="margin-top: 1rem;">
+                    <i class="fas fa-shield-alt"></i> Minimal data, maximum privacy
+                </p>
+            </footer>
         </div>
-        
-        <div class="section">
-            <h2>6. Cookies and Tracking</h2>
-            <p>Our website uses cookies and similar technologies to enhance user experience:</p>
-            <ul>
-                <li><strong>Essential Cookies:</strong> Required for basic website functionality</li>
-                <li><strong>Analytics Cookies:</strong> Help us understand how users interact with our site</li>
-                <li><strong>Preference Cookies:</strong> Remember your settings and preferences</li>
-            </ul>
-            <p>You can control cookie settings through your browser preferences. Disabling cookies may affect website functionality.</p>
-        </div>
-        
-        <div class="section">
-            <h2>7. Third-Party Services</h2>
-            <p>We use the following third-party services that may collect information:</p>
-            <ul>
-                <li><strong>Discord:</strong> For authentication and support ticket system</li>
-                <li><strong>Railway:</strong> For hosting our bot and website</li>
-                <li><strong>AWS (Amazon Web Services):</strong> For data storage (if enabled)</li>
-                <li><strong>GitHub:</strong> For hosting script files and version control</li>
-                <li><strong>Firebase:</strong> For real-time chat functionality (if used)</li>
-            </ul>
-            <p>These services have their own privacy policies. We encourage you to review them.</p>
-        </div>
-        
-        <div class="section">
-            <h2>8. Children's Privacy</h2>
-            <p>Our services are not directed to children under 13 years of age. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.</p>
-        </div>
-        
-        <div class="section">
-            <h2>9. International Data Transfers</h2>
-            <p>Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your data, including:</p>
-            <ul>
-                <li>Standard Contractual Clauses approved by relevant authorities</li>
-                <li>Data processing agreements with our service providers</li>
-                <li>Compliance with GDPR, CCPA, and other applicable laws</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>10. Data Breach Procedures</h2>
-            <p>In the event of a data breach, we will:</p>
-            <ul>
-                <li>Immediately investigate and contain the breach</li>
-                <li>Notify affected users within 72 hours</li>
-                <li>Report to relevant authorities as required by law</li>
-                <li>Take corrective actions to prevent future breaches</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>11. Changes to This Privacy Policy</h2>
-            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by:</p>
-            <ul>
-                <li>Posting the new Privacy Policy on this page</li>
-                <li>Updating the "Last Updated" date</li>
-                <li>Sending a notice via Discord for significant changes</li>
-                <li>Displaying a prominent notice on our website</li>
-            </ul>
-            <p>You are advised to review this Privacy Policy periodically for any changes.</p>
-        </div>
-        
-        <div class="section">
-            <h2>12. Contact Information</h2>
-            <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
-            <ul>
-                <li><strong>Discord:</strong> Join our support server and open a ticket</li>
-                <li><strong>Email:</strong> rawr.xyl@gmail.com</li>
-                <li><strong>Support Bot:</strong> DM our Discord bot</li>
-                <li><strong>Response Time:</strong> Usually within 24-48 hours</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>13. GDPR Compliance (For EU Users)</h2>
-            <p>If you are in the European Economic Area (EEA), you have additional rights under the GDPR:</p>
-            <ul>
-                <li><strong>Right to be Forgotten:</strong> Request deletion of your data</li>
-                <li><strong>Data Portability:</strong> Receive your data in a structured format</li>
-                <li><strong>Object to Processing:</strong> Object to certain types of data processing</li>
-                <li><strong>Automated Decisions:</strong> Not be subject to automated decision-making</li>
-            </ul>
-            <p>Our legal basis for processing your data is your consent and our legitimate interest in providing services.</p>
-        </div>
-        
-        <div class="section">
-            <h2>14. CCPA Compliance (For California Users)</h2>
-            <p>If you are a California resident, you have the following rights under the CCPA:</p>
-            <ul>
-                <li><strong>Right to Know:</strong> Request disclosure of collected data</li>
-                <li><strong>Right to Delete:</strong> Request deletion of personal information</li>
-                <li><strong>Right to Opt-Out:</strong> Opt-out of data sales (we don't sell data)</li>
-                <li><strong>Non-Discrimination:</strong> Equal service regardless of privacy choices</li>
-            </ul>
-            <p>To exercise your CCPA rights, please contact us with "CCPA Request" in the subject line.</p>
-        </div>
-        
-        <div class="section">
-            <h2>15. Consent</h2>
-            <p>By using our website and services, you consent to our Privacy Policy and agree to its terms. If you do not agree, please discontinue use of our services immediately.</p>
-        </div>
-        
-        <footer class="text-center text-white/20 text-xs mt-8 pt-8 border-t border-white/10">
-            <p>&copy; 2026 rawr.xyz - All Rights Reserved</p>
-            <p class="mt-2">
-                <a href="/" class="hover:text-primary transition-colors">Home</a> |
-                <a href="/tos" class="hover:text-primary transition-colors">Terms of Service</a> |
-                <a href="/privacy" class="text-primary">Privacy Policy</a>
-            </p>
-            <p class="mt-4">
-                <i class="fas fa-shield-alt"></i> Your privacy is our priority
-            </p>
-        </footer>
     </div>
 </body>
 </html>
