@@ -1,626 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>rawr.xyz</title>
-    <meta name="description" content="rawr.xyz server">
-    <meta name="theme-color" content="#ef4444">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>rawr.xyz — Home</title>
+  <meta name="description" content="rawr.xyz made for u">
+  <meta name="theme-color" content="#0a0a0a">
 
-    <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- fonts & icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        background: '#050505',
-                        primary: '#ef4444',
-                        foreground: '#ffffff',
-                    }
-                }
-            }
+  <!-- tailwind via cdn (stable) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            surface: '#0b0b0b',
+            accent: '#f97316',
+            muted: '#a1a1aa',
+            border: 'rgba(255,255,255,0.06)',
+          }
         }
-    </script>
+      }
+    }
+  </script>
 
-    <style>
-        #root {
-            width: 100%;
-            min-height: 100vh;
-            background: #050505;
-        }
-        body {
-            margin: 0;
-            background: #050505;
-            overflow-x: hidden;
-        }
-        .rain-canvas {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            z-index: 0 !important;
-            pointer-events: none !important;
-            opacity: 0.15 !important;
-        }
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .scanline {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to bottom, transparent, rgba(239, 68, 68, 0.1), transparent);
-            z-index: 20;
-            animation: scan 6s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes scan {
-            0%   { top: -5%; }
-            100% { top: 105%; }
-        }
-        .logo-glow {
-            filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.3));
-            animation: float 4s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .copy-success {
-            animation: successPulse 0.5s ease;
-        }
-        @keyframes successPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        .footer-link {
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-        .footer-link:hover {
-            color: #ef4444;
-        }
-        .nav-tab {
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .nav-tab:hover {
-            color: white;
-        }
-        .nav-tab.active {
-            background: #ef4444;
-            color: black;
-        }
-        .script-card {
-            transition: all 0.3s ease;
-        }
-        .script-card:hover {
-            border-color: rgba(239, 68, 68, 0.3);
-            transform: translateY(-2px);
-        }
-        .tag {
-            transition: all 0.3s ease;
-        }
-        .tag:hover {
-            color: white;
-            background: rgba(239, 68, 68, 0.2);
-        }
-        .link-button {
-            transition: all 0.3s ease;
-        }
-        .link-button:hover {
-            border-color: rgba(239, 68, 68, 0.4);
-            background: rgba(255, 255, 255, 0.06);
-        }
-        .link-button:hover i {
-            color: #ef4444;
-        }
-        .link-button:hover span {
-            color: white;
-        }
-    </style>
+  <style>
+    body {
+      margin: 0;
+      background-color: #080808;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="1" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.035"/></svg>');
+      background-repeat: repeat;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .rain-canvas {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 0 !important;
+      pointer-events: none !important;
+      opacity: 0.12 !important;
+    }
+
+    .content-layer {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .card-hover {
+      transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.1s ease;
+    }
+    .card-hover:hover {
+      border-color: rgba(249, 115, 22, 0.25);
+      background-color: rgba(255,255,255,0.02);
+      transform: translateY(-1px);
+    }
+
+    .nav-pill {
+      transition: all 0.2s ease;
+    }
+    .nav-pill.active {
+      background: #f97316;
+      color: #0a0a0a;
+      font-weight: 600;
+    }
+
+    .glow-text {
+      text-shadow: 0 0 15px rgba(249,115,22,0.3);
+    }
+
+    hr.subtle {
+      border-color: rgba(255,255,255,0.05);
+    }
+
+    button, a {
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div id="root"></div>
+  <div id="root"></div>
 
-    <script>
-        window.onerror = function(msg, url, line, col, error) {
-            const root = document.getElementById('root');
-            if (root) {
-                root.innerHTML = `
-                    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#050505;color:#ef4444;font-family:monospace;padding:20px;text-align:center;">
-                        <h1 style="font-size:24px;margin-bottom:10px;">⚠️ Error Loading Page</h1>
-                        <p style="color:#888;font-size:14px;max-width:500px;">${msg || 'Unknown error'}</p>
-                        <details style="margin-top:20px;color:#555;font-size:12px;max-width:500px;text-align:left;">
-                            <summary>Technical Details</summary>
-                            <pre style="margin-top:10px;background:#111;padding:10px;border-radius:4px;overflow:auto;max-height:200px;">${error?.stack || 'No stack trace available'}</pre>
-                        </details>
-                    </div>
-                `;
+  <!-- react / react-dom production -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+
+  <script>
+    // safety check
+    if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
+      document.getElementById('root').innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0a0a0a;color:#f97316;font-family:sans-serif;">
+          <p>⚠️ Could not load core libraries. Check connection.</p>
+        </div>`;
+      throw new Error('React not available');
+    }
+
+    const { useState, useEffect, useRef } = React;
+
+    const AmbientCanvas = ({ speed = 0.8 }) => {
+      const canvasRef = useRef(null);
+      const mouse = useRef({ x: 0, y: 0 });
+
+      useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let animationId;
+        let particles = [];
+        const MAX = 280;
+
+        const resize = () => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        };
+
+        const createParticle = () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          length: Math.random() * 14 + 6,
+          speed: Math.random() * 8 + 4,
+          opacity: Math.random() * 0.25 + 0.06,
+          drift: (Math.random() - 0.5) * 1.2,
+        });
+
+        for (let i = 0; i < MAX; i++) particles.push(createParticle());
+
+        const handleMouse = (e) => {
+          mouse.current.x = (e.clientX / window.innerWidth) - 0.5;
+          mouse.current.y = (e.clientY / window.innerHeight) - 0.5;
+        };
+
+        const draw = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const offsetX = mouse.current.x * 45;
+          const tilt = mouse.current.x * 4;
+
+          particles.forEach(p => {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(249, 115, 22, ${p.opacity})`;
+            ctx.lineWidth = 1.2;
+            ctx.moveTo(p.x + offsetX, p.y);
+            ctx.lineTo(p.x + offsetX + tilt, p.y + p.length);
+            ctx.stroke();
+
+            p.y += p.speed * speed;
+            p.x += (p.drift + mouse.current.x * 7) * speed;
+
+            if (p.y > canvas.height + 15) {
+              p.y = -15;
+              p.x = Math.random() * canvas.width;
             }
-            return true;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.x < 0) p.x = canvas.width;
+          });
+
+          animationId = requestAnimationFrame(draw);
         };
 
-        if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
-            document.getElementById('root').innerHTML = `
-                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#050505;color:#ef4444;font-family:monospace;padding:20px;text-align:center;">
-                    <h1 style="font-size:24px;margin-bottom:10px;">⚠️ React Failed to Load</h1>
-                    <p style="color:#888;font-size:14px;">Check your internet connection and try again.</p>
-                </div>
-            `;
-            throw new Error('React not loaded');
+        window.addEventListener('resize', resize);
+        window.addEventListener('mousemove', handleMouse);
+        resize();
+        draw();
+
+        return () => {
+          window.removeEventListener('resize', resize);
+          window.removeEventListener('mousemove', handleMouse);
+          cancelAnimationFrame(animationId);
+        };
+      }, [speed]);
+
+      return React.createElement('canvas', {
+        ref: canvasRef,
+        className: 'rain-canvas',
+        style: { filter: 'blur(1px)' }
+      });
+    };
+
+    const ScriptHero = () => {
+      const [copied, setCopied] = useState(false);
+      const [config, setConfig] = useState({ version: "v4.5.1", status: "operational", statusColor: "#22c55e" });
+
+      const scriptText = `loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()`;
+
+      useEffect(() => {
+        const url = `https://raw.githubusercontent.com/imcomingforyou6959-gif/rawr.xyl/refs/heads/main/status.json?t=${Date.now()}`;
+        fetch(url)
+          .then(res => res.ok ? res.json() : null)
+          .then(data => {
+            if (data && data.version) setConfig(data);
+            else setConfig({ version: "v4.5.1", status: "online", statusColor: "#22c55e" });
+          })
+          .catch(() => setConfig({ version: "v4.5.1", status: "online", statusColor: "#22c55e" }));
+      }, []);
+
+      const copyToClipboard = async () => {
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(scriptText);
+          } else {
+            const ta = document.createElement("textarea");
+            ta.value = scriptText;
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+          }
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1800);
+        } catch (e) {
+          console.warn('copy failed', e);
         }
-    </script>
+      };
 
-    <script>
-        const { useEffect, useRef, useState } = React;
-        const RainBackground = ({ speed = 1 }) => {
-            const canvasRef = useRef(null);
-            const mouse = useRef({ x: 0, y: 0 });
+      const statusDot = config.statusColor === "#22c55e" ? "bg-green-500" : (config.statusColor === "red" ? "bg-red-500" : "bg-yellow-500");
 
-            const getSeasonConfig = () => {
-                const month = new Date().getUTCMonth();
-                if ([11, 0, 1].includes(month)) return { name: 'winter', color: '200, 230, 255', count: 400, type: 'snow' };
-                if ([2, 3, 4].includes(month)) return { name: 'spring', color: '255, 182, 193', count: 300, type: 'petal' };
-                if ([5, 6, 7].includes(month)) return { name: 'summer', color: '239, 68, 68', count: 600, type: 'rain' };
-                return { name: 'autumn', color: '255, 140, 0', count: 350, type: 'leaf' };
-            };
-
-            useEffect(() => {
-                const canvas = canvasRef.current;
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                const season = getSeasonConfig();
-                let animationFrameId;
-
-                const droplets = [];
-
-                const resize = () => {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                };
-
-                const createParticle = () => ({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    length: season.type === 'rain' ? Math.random() * 20 + 10 : Math.random() * 5 + 5,
-                    size: Math.random() * 2 + 1,
-                    speed: Math.random() * (season.type === 'snow' ? 2 : 10) + 3,
-                    opacity: Math.random() * 0.4 + 0.1,
-                    drift: Math.random() * 2 - 1,
-                    spin: Math.random() * 0.2
-                });
-
-                for (let i = 0; i < season.count; i++) droplets.push(createParticle());
-
-                const handleMouseMove = (e) => {
-                    mouse.current.x = (e.clientX / window.innerWidth) - 0.5;
-                    mouse.current.y = (e.clientY / window.innerHeight) - 0.5;
-                };
-
-                const draw = () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    const mouseOffsetX = mouse.current.x * 60;
-                    const tilt = mouse.current.x * (season.type === 'rain' ? 5 : 2);
-
-                    droplets.forEach(p => {
-                        ctx.beginPath();
-                        ctx.fillStyle = `rgba(${season.color}, ${p.opacity})`;
-                        ctx.strokeStyle = `rgba(${season.color}, ${p.opacity})`;
-                        ctx.lineWidth = p.size;
-
-                        if (season.type === 'rain') {
-                            ctx.moveTo(p.x + mouseOffsetX, p.y);
-                            ctx.lineTo(p.x + mouseOffsetX + tilt, p.y + p.length);
-                            ctx.stroke();
-                        } else {
-                            ctx.arc(p.x + mouseOffsetX, p.y, p.size, 0, Math.PI * 2);
-                            ctx.fill();
-                        }
-
-                        p.y += p.speed * speed;
-                        p.x += (p.drift + (mouse.current.x * 10)) * speed;
-
-                        if (p.y > canvas.height) {
-                            p.y = -20;
-                            p.x = Math.random() * canvas.width;
-                        }
-                        if (p.x > canvas.width) p.x = 0;
-                        if (p.x < 0) p.x = canvas.width;
-                    });
-
-                    animationFrameId = requestAnimationFrame(draw);
-                };
-
-                window.addEventListener('resize', resize);
-                window.addEventListener('mousemove', handleMouseMove);
-                resize();
-                draw();
-
-                return () => {
-                    window.removeEventListener('resize', resize);
-                    window.removeEventListener('mousemove', handleMouseMove);
-                    if (animationFrameId) cancelAnimationFrame(animationFrameId);
-                };
-            }, [speed]);
-
-            return React.createElement('canvas', {
-                ref: canvasRef,
-                className: 'rain-canvas',
-                style: { filter: 'blur(0.8px)' }
-            });
-        };
-
-        const ScriptBlock = () => {
-            const [copied, setCopied] = useState(false);
-            const [config, setConfig] = useState({
-                version: "LOADING...",
-                status: "CHECKING...",
-                statusColor: "gray"
-            });
-
-            const scriptText = `loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()`;
-
-            useEffect(() => {
-                const jsonUrl = `https://raw.githubusercontent.com/imcomingforyou6959-gif/rawr.xyl/refs/heads/main/status.json?t=${new Date().getTime()}`;
-
-                fetch(jsonUrl)
-                    .then(response => {
-                        if (!response.ok) throw new Error('File not found');
-                        return response.json();
-                    })
-                    .then(data => {
-                        setConfig(data);
-                    })
-                    .catch(() => {
-                        setConfig({ version: "V4.5.1", status: "ONLINE", statusColor: "green" });
-                    });
-            }, []);
-
-            const handleCopy = async () => {
-                try {
-                    if (navigator.clipboard && window.isSecureContext) {
-                        await navigator.clipboard.writeText(scriptText);
-                    } else {
-                        const textArea = document.createElement("textarea");
-                        textArea.value = scriptText;
-                        textArea.style.position = "fixed";
-                        textArea.style.left = "-9999px";
-                        document.body.appendChild(textArea);
-                        textArea.focus();
-                        textArea.select();
-                        document.execCommand('copy');
-                        textArea.remove();
-                    }
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
-                } catch (err) {
-                    console.error('Failed to copy: ', err);
-                }
-            };
-
-            const dotColorClass = config.statusColor === "green" ? "bg-green-500" : 
-                                 config.statusColor === "red" ? "bg-red-500" : "bg-yellow-500";
-            const textColorClass = config.statusColor === "green" ? "text-green-500/80" : 
-                                  config.statusColor === "red" ? "text-red-500/80" : "text-yellow-500/80";
-
-            const CompatibilityBar = () => {
-                const executors = ["Xeno", "Velocity", "Solara", "Volt", "Sirhurt", "Wave", "Madium", "Luna", "And Any Executor!"];
-                return React.createElement('div', { className: "mt-6 w-full max-w-lg px-2 fade-in" },
-                    React.createElement('div', { className: "flex items-center gap-3 mb-3" },
-                        React.createElement('div', { className: "h-[1px] flex-1 bg-white/5" }),
-                        React.createElement('span', { className: "text-[9px] font-mono text-white/20 tracking-[0.3em] uppercase" }, "Verified Compatibility"),
-                        React.createElement('div', { className: "h-[1px] flex-1 bg-white/5" })
-                    ),
-                    React.createElement('div', { className: "flex flex-wrap justify-center gap-x-6 gap-y-3 opacity-40 hover:opacity-100 transition-opacity duration-500" },
-                        ...executors.map((name) =>
-                            React.createElement('div', { key: name, className: "flex items-center gap-2 group" },
-                                React.createElement('div', { className: "w-1 h-1 rounded-full bg-primary/50 group-hover:bg-primary group-hover:shadow-[0_0_8px_#ef4444] transition-all" }),
-                                React.createElement('span', { className: "text-[10px] font-mono font-bold text-white/60 group-hover:text-white transition-colors tracking-wider" }, name)
-                            )
-                        ),
-                        React.createElement('span', { className: "text-[10px] font-mono text-white/20 italic" }, "& more")
-                    )
-                );
-            };
-
-            return React.createElement('div', { className: "flex flex-col items-center w-full" },
-                React.createElement('div', { className: "relative w-full max-w-lg bg-black/60 border border-white/10 rounded-xl overflow-hidden backdrop-blur-md shadow-2xl mt-8 fade-in" },
-                    React.createElement('div', { className: "flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/10" },
-                        React.createElement('div', { className: "flex items-center gap-4" },
-                            React.createElement('div', { className: "flex gap-1.5" },
-                                React.createElement('div', { className: "w-2.5 h-2.5 rounded-full bg-[#ff5f56]" }),
-                                React.createElement('div', { className: "w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" }),
-                                React.createElement('div', { className: "w-2.5 h-2.5 rounded-full bg-[#27c93f]" })
-                            ),
-                            React.createElement('span', { className: "text-[10px] font-mono text-white/30 bg-white/5 px-2 py-0.5 rounded border border-white/5 uppercase tracking-tighter" }, config.version)
-                        ),
-                        React.createElement('div', { className: "flex items-center gap-2" },
-                            React.createElement('span', { className: "relative flex h-2 w-2" },
-                                React.createElement('span', { className: `animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${dotColorClass}` }),
-                                React.createElement('span', { className: `relative inline-flex rounded-full h-2 w-2 ${dotColorClass}` })
-                            ),
-                            React.createElement('span', { className: `text-[10px] font-mono uppercase tracking-widest font-bold ${textColorClass}` }, config.status)
-                        )
-                    ),
-                    React.createElement('div', { className: "p-6 relative group" },
-                        React.createElement('div', { className: "bg-black/40 rounded-lg p-4 mb-4 border border-white/5 group-hover:border-primary/20 transition-colors" },
-                            React.createElement('code', { className: "block font-mono text-[10px] md:text-xs text-primary/90 break-all leading-relaxed" },
-                                React.createElement('span', { className: "text-white/20 mr-2" }, "$"),
-                                scriptText
-                            )
-                        ),
-                        React.createElement('button', {
-                            onClick: handleCopy,
-                            className: `relative w-full py-4 rounded-lg font-mono text-[10px] font-bold transition-all duration-300 border border-primary/30 bg-primary/5 hover:bg-primary/20 text-white tracking-widest overflow-hidden active:scale-95 ${copied ? 'copy-success' : ''}`
-                        },
-                            copied ? '✅ Copied to Clipboard' : '📋 Click to copy'
-                        )
-                    )
-                ),
-                React.createElement(CompatibilityBar, null)
-            );
-        };
-
-        const ScriptsPage = () => {
-            const [copiedId, setCopiedId] = useState(null);
-
-            const scripts = [
-                {
-                    id: 1,
-                    name: "Universal Old",
-                    description: "outdated",
-                    version: "2.3.1",
-                    loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Universal.lua", true))()',
-                    tags: ["ALL-IN-ONE", "STABLE"]
-                },
-                {
-                    id: 2,
-                    name: "Hellmet",
-                    description: "things",
-                    version: "1.1.5",
-                    loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Hellmet.lua"))()',
-                    tags: ["ESP", "AIMBOT"]
-                },
-                {
-                    id: 3,
-                    name: "Prison Life",
-                    description: "prison",
-                    version: "4.9.7",
-                    loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()',
-                    tags: ["PRISON", "ESCAPE"]
-                },
-                {
-                    id: 4,
-                    name: "Rivals",
-                    description: "rival",
-                    version: "4.9.6",
-                    loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()',
-                    tags: ["PVP", "COMPETITIVE"]
-                },
-                {
-                    id: 5,
-                    name: "nil",
-                    description: "nil",
-                    version: "2.1.0",
-                    loadstring: 'new',
-                    tags: ["pcp", "pcp"]
-                },
-                {
-                    id: 6,
-                    name: "nil",
-                    description: "nil",
-                    version: "3.0.2",
-                    loadstring: 'nil',
-                    tags: ["nil", "placeholder"]
-                }
-            ];
-
-            const copyScript = async (scriptText, id) => {
-                try {
-                    if (navigator.clipboard && window.isSecureContext) {
-                        await navigator.clipboard.writeText(scriptText);
-                    } else {
-                        const textArea = document.createElement("textarea");
-                        textArea.value = scriptText;
-                        textArea.style.position = "fixed";
-                        textArea.style.left = "-9999px";
-                        document.body.appendChild(textArea);
-                        textArea.focus();
-                        textArea.select();
-                        document.execCommand('copy');
-                        textArea.remove();
-                    }
-                    setCopiedId(id);
-                    setTimeout(() => setCopiedId(null), 2000);
-                } catch (err) {
-                    console.error('Failed to copy: ', err);
-                }
-            };
-
-            return React.createElement('div', { className: "relative z-20 w-full max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16" },
-                React.createElement('div', { className: "text-center mb-12 fade-in" },
-                    React.createElement('h2', { className: "text-4xl sm:text-5xl font-black font-mono text-white italic tracking-tight" },
-                        "Script ", React.createElement('span', { className: "text-primary" }, "Library")
-                    ),
-                    React.createElement('p', { className: "text-white/30 font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase mt-3" },
-                        "All scripts are regularly updated"
-                    )
-                ),
-                React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" },
-                    scripts.map((script) =>
-                        React.createElement('div', {
-                            key: script.id,
-                            className: "bg-black/40 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm script-card"
-                        },
-                            React.createElement('div', { className: "p-5" },
-                                React.createElement('div', { className: "flex items-start justify-between mb-3" },
-                                    React.createElement('h3', { className: "text-lg font-bold text-white group-hover:text-primary transition-colors" }, script.name),
-                                    React.createElement('span', { className: "text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded font-mono" }, script.version)
-                                ),
-                                React.createElement('p', { className: "text-white/60 text-sm mb-4 min-h-[40px]" }, script.description),
-                                React.createElement('div', { className: "flex flex-wrap gap-2 mb-4" },
-                                    script.tags.map(tag =>
-                                        React.createElement('span', {
-                                            key: tag,
-                                            className: "text-[9px] bg-white/5 text-white/40 px-2 py-0.5 rounded uppercase tracking-wider tag"
-                                        }, tag)
-                                    )
-                                ),
-                                React.createElement('div', { className: "bg-black/60 rounded-lg p-3 mb-3 border border-white/5 overflow-x-auto" },
-                                    React.createElement('code', { className: "text-primary/80 text-[10px] font-mono break-all select-all" }, script.loadstring)
-                                ),
-                                React.createElement('button', {
-                                    onClick: () => copyScript(script.loadstring, script.id),
-                                    className: "w-full py-2.5 bg-primary/10 hover:bg-primary text-primary hover:text-black border border-primary/20 rounded-lg font-bold text-[10px] tracking-wider uppercase transition-all flex items-center justify-center gap-2"
-                                },
-                                    React.createElement('i', { className: `fas ${copiedId === script.id ? 'fa-check' : 'fa-copy'} text-[10px]` }),
-                                    copiedId === script.id ? 'Copied!' : 'Copy Script'
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement('div', { className: "mt-12 text-center" },
-                    React.createElement('p', { className: "text-white/20 text-[9px] font-mono" },
-                        React.createElement('i', { className: "fas fa-shield-alt mr-2" }),
-                        "All scripts are regularly updated and tested for stability."
-                    )
-                )
-            );
-        };
-
-        const LinkButton = ({ href, icon, label, external = true }) => {
-            return React.createElement('a', {
-                href: href,
-                target: external ? "_blank" : "_self",
-                rel: external ? "noopener noreferrer" : "",
-                className: "flex items-center gap-3 sm:gap-4 px-6 sm:px-8 py-3 sm:py-4 bg-white/[0.02] border border-white/5 rounded-lg sm:rounded-2xl link-button backdrop-blur-sm"
+      return React.createElement('div', { className: "w-full max-w-xl mx-auto mt-10" },
+        React.createElement('div', { className: "bg-[#0f0f0f] border border-[#ffffff10] rounded-2xl overflow-hidden shadow-2xl backdrop-blur-md" },
+          // header
+          React.createElement('div', { className: "flex items-center justify-between px-5 py-3 border-b border-[#ffffff10] bg-[#ffffff04]" },
+            React.createElement('div', { className: "flex items-center gap-3" },
+              React.createElement('div', { className: "flex gap-1.5" },
+                React.createElement('span', { className: "w-2.5 h-2.5 rounded-full bg-[#ff5f56]" }),
+                React.createElement('span', { className: "w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" }),
+                React.createElement('span', { className: "w-2.5 h-2.5 rounded-full bg-[#27c93f]" })
+              ),
+              React.createElement('span', { className: "text-xs font-mono text-white/40 bg-white/5 px-2 py-0.5 rounded-md" }, config.version)
+            ),
+            React.createElement('div', { className: "flex items-center gap-2" },
+              React.createElement('span', { className: `relative flex h-2.5 w-2.5 ${statusDot} rounded-full` },
+                React.createElement('span', { className: "animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" })
+              ),
+              React.createElement('span', { className: "text-xs font-mono uppercase tracking-widest text-white/60 font-medium" }, config.status)
+            )
+          ),
+          // body
+          React.createElement('div', { className: "p-5" },
+            React.createElement('div', { className: "bg-black/40 border border-white/5 rounded-xl p-4 mb-4 font-mono text-sm text-orange-300/80 break-all select-all" },
+              scriptText
+            ),
+            React.createElement('button', {
+              onClick: copyToClipboard,
+              className: `w-full py-3.5 rounded-xl font-semibold text-sm tracking-wide transition-all border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 text-white flex items-center justify-center gap-2 ${copied ? 'bg-green-500/20 border-green-500/40' : ''}`
             },
-                React.createElement('i', { className: `${icon} text-white/30 group-hover:text-primary transition-colors text-lg sm:text-xl` }),
-                React.createElement('span', { className: "font-bold text-[11px] sm:text-[13px] tracking-tight text-white/60 group-hover:text-white transition-colors" }, label)
-            );
-        };
+              copied ? '✓ Copied' : 'Copy script'
+            )
+          )
+        ),
+        // clean
+        React.createElement('div', { className: "mt-5 text-center text-xs text-white/30 font-mono flex flex-wrap items-center justify-center gap-x-5 gap-y-2" },
+          React.createElement('span', null, "Xeno"),
+          React.createElement('span', { className: "text-white/15" }, "•"),
+          React.createElement('span', null, "Velocity"),
+          React.createElement('span', { className: "text-white/15" }, "•"),
+          React.createElement('span', null, "Solara"),
+          React.createElement('span', { className: "text-white/15" }, "•"),
+          React.createElement('span', null, "Volt"),
+          React.createElement('span', { className: "text-white/15" }, "•"),
+          React.createElement('span', { className: "text-white/25 italic" }, "& more")
+        )
+      );
+    };
 
-        const App = () => {
-            const [page, setPage] = useState('home');
+    const ScriptsLibrary = () => {
+      const [copiedId, setCopiedId] = useState(null);
 
-            const renderPage = () => {
-                if (page === 'scripts') {
-                    return React.createElement(ScriptsPage, null);
-                }
-                return React.createElement('div', { className: "flex flex-col items-center w-full max-w-4xl" },
-                    React.createElement('img', {
-                        src: "assets/logo.png",
-                        alt: "rawr.xyz",
-                        className: "w-28 h-28 sm:w-44 sm:h-44 object-contain mb-8 sm:mb-12 logo-glow",
-                        onError: (e) => { e.target.style.display = 'none'; }
-                    }),
-                    React.createElement('div', { className: "text-center mb-8" },
-                        React.createElement('h1', { className: "text-5xl sm:text-7xl font-black font-mono text-white italic tracking-tighter uppercase leading-tight" },
-                            "rawr", React.createElement('span', { className: "text-primary" }, ".xyz")
-                        ),
-                        React.createElement('p', { className: "text-white/20 font-mono text-[8px] sm:text-[10px] tracking-[0.35em] sm:tracking-[0.6em] mt-3 uppercase font-bold" },
-                            "Safety Security Execution"
-                        )
-                    ),
-                    React.createElement('div', { className: "flex flex-wrap justify-center gap-3 sm:gap-5 mb-8" },
-                        React.createElement(LinkButton, { href: "https://discord.gg/eMpUQzFrNG", icon: "fa-brands fa-discord", label: "Community" }),
-                        React.createElement(LinkButton, { href: "https://github.com/imcomingforyou6959-gif/rawr.xyz", icon: "fa-brands fa-github", label: "Repository" }),
-                        React.createElement(LinkButton, { href: "https://www.youtube.com/@rawr.xy3", icon: "fa-brands fa-youtube", label: "Showcase" })
-                    ),
-                    React.createElement(ScriptBlock, null)
-                );
-            };
+      const scripts = [
+        { id: 1, name: "Universal Old", desc: "Legacy", version: "2.3.1", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Universal.lua", true))()', tags: ["stable"] },
+        { id: 2, name: "Hellmet", desc: "little old project", version: "1.1.5", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Hellmet.lua"))()', tags: ["esp", "aim"] },
+        { id: 3, name: "Prison Life", desc: "Prison", version: "4.9.7", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()', tags: ["prison"] },
+        { id: 4, name: "Rivals", desc: "PvP", version: "4.9.6", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()', tags: ["pvp"] },
+        { id: 5, name: "Dahood Copys", desc: "works on zee hood, der hood, dev hood and more", version: "idk", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/rawrrunsts.txt"))()', tags: ["experimental"] },
+        { id: 6, name: "nil", desc: "placeholder", version: "3.0.2", loadstring: 'nil', tags: ["placeholder"] }
+      ];
 
-            const navLinks = [
-                { id: 'home', label: 'Home', icon: 'fa-home' },
-                { id: 'scripts', label: 'Scripts', icon: 'fa-scroll' }
-            ];
+      const copy = async (text, id) => {
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+          }
+          setCopiedId(id);
+          setTimeout(() => setCopiedId(null), 1800);
+        } catch (e) {}
+      };
 
-            return React.createElement('div', { className: "min-h-screen w-full relative bg-background overflow-hidden" },
-                React.createElement(RainBackground, null),
-                React.createElement('div', { className: "scanline" }),
-                React.createElement('div', { className: "content-wrapper flex flex-col items-center justify-center" },
-                    // Navigation
-                    React.createElement('div', { className: "relative z-20 flex gap-2 mb-8 bg-white/5 p-1 rounded-full border border-white/10" },
-                        navLinks.map(link =>
-                            React.createElement('button', {
-                                key: link.id,
-                                onClick: () => setPage(link.id),
-                                className: `px-6 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all nav-tab ${page === link.id ? 'active' : 'text-white/40 hover:text-white/80'}`
-                            },
-                                React.createElement('i', { className: `fas ${link.icon} mr-2` }),
-                                link.label
-                            )
-                        )
-                    ),
-                    renderPage(),
-                    React.createElement('footer', { className: "mt-16 sm:mt-24 z-20 text-center select-none w-full max-w-4xl" },
-                        React.createElement('div', { className: "text-[8px] sm:text-[10px] font-mono text-white/10 tracking-[0.5em] sm:tracking-[0.8em] uppercase mb-3" },
-                            "rawr.xyz // find a way to live :3"
-                        ),
-                        React.createElement('div', { className: "flex flex-wrap justify-center gap-3 sm:gap-6 text-[8px] sm:text-[9px] font-mono text-white/20 tracking-normal" },
-                            React.createElement('span', { className: "footer-link", onClick: () => setPage('home') }, "Home"),
-                            React.createElement('span', { className: "text-white/10" }, "•"),
-                            React.createElement('span', { className: "footer-link", onClick: () => setPage('scripts') }, "Scripts"),
-                            React.createElement('span', { className: "text-white/10" }, "•"),
-                            React.createElement('a', {
-                                href: "/tos.html",
-                                className: "footer-link hover:text-primary transition-colors"
-                            }, "Terms of Service"),
-                            React.createElement('span', { className: "text-white/10" }, "•"),
-                            React.createElement('a', {
-                                href: "/privacy.html",
-                                className: "footer-link hover:text-primary transition-colors"
-                            }, "Privacy Policy"),
-                            React.createElement('span', { className: "text-white/10" }, "•"),
-                            React.createElement('a', {
-                                href: "https://discord.gg/eMpUQzFrNG",
-                                target: "_blank",
-                                rel: "noopener noreferrer",
-                                className: "footer-link"
-                            },
-                                React.createElement('i', { className: "fab fa-discord mr-1" }),
-                                "Support"
-                            )
-                        ),
-                        React.createElement('div', { className: "text-[7px] sm:text-[8px] font-mono text-white/10 mt-3" },
-                            "\u00A9 2026 rawr.xyz - All Rights Reserved"
-                        )
-                    )
+      return React.createElement('div', { className: "w-full max-w-6xl mx-auto px-4 py-12" },
+        React.createElement('h2', { className: "text-4xl font-bold text-white text-center mb-2 tracking-tight" },
+          "Script ", React.createElement('span', { className: "text-accent" }, "Library")
+        ),
+        React.createElement('p', { className: "text-center text-white/40 text-sm mb-10 font-mono" }, "curated & frequently updated"),
+        React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" },
+          scripts.map(script =>
+            React.createElement('div', {
+              key: script.id,
+              className: "bg-[#0f0f0f] border border-[#ffffff10] rounded-xl p-5 card-hover flex flex-col"
+            },
+              React.createElement('div', { className: "flex justify-between items-start mb-2" },
+                React.createElement('h3', { className: "text-white font-semibold text-lg" }, script.name),
+                React.createElement('span', { className: "text-xs bg-white/5 text-white/60 px-2 py-0.5 rounded font-mono" }, script.version)
+              ),
+              React.createElement('p', { className: "text-white/50 text-sm mb-3" }, script.desc),
+              React.createElement('div', { className: "flex flex-wrap gap-2 mb-4" },
+                script.tags.map(tag => React.createElement('span', { key: tag, className: "text-[10px] bg-white/5 text-white/40 px-2 py-0.5 rounded uppercase tracking-wider" }, tag))
+              ),
+              React.createElement('div', { className: "bg-black/30 border border-white/5 rounded-lg p-3 mb-3 font-mono text-xs text-orange-300/70 break-all" }, script.loadstring),
+              React.createElement('button', {
+                onClick: () => copy(script.loadstring, script.id),
+                className: "mt-auto w-full py-2.5 bg-white/5 border border-white/10 hover:border-orange-500/40 text-white/70 hover:text-white rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2"
+              },
+                copiedId === script.id ? '✓ Copied' : 'Copy'
+              )
+            )
+          )
+        )
+      );
+    };
+
+    const App = () => {
+      const [page, setPage] = useState('home');
+
+      const navItems = [
+        { id: 'home', label: 'Home', icon: 'fa-house' },
+        { id: 'scripts', label: 'Scripts', icon: 'fa-scroll' }
+      ];
+
+      return React.createElement('div', { className: "relative min-h-screen w-full bg-[#080808] text-white font-sans" },
+        React.createElement(AmbientCanvas, null),
+        React.createElement('div', { className: "content-layer" },
+          // navigation pills
+          React.createElement('div', { className: "relative z-20 flex gap-1.5 mb-10 bg-white/5 p-1 rounded-full border border-white/10 backdrop-blur-sm" },
+            navItems.map(item =>
+              React.createElement('button', {
+                key: item.id,
+                onClick: () => setPage(item.id),
+                className: `px-5 py-2 rounded-full text-sm font-medium flex items-center gap-2 nav-pill ${page === item.id ? 'active text-black' : 'text-white/50 hover:text-white/80'}`
+              },
+                React.createElement('i', { className: `fas ${item.icon} text-xs` }),
+                item.label
+              )
+            )
+          ),
+
+          // page content
+          page === 'home' ?
+            React.createElement('div', { className: "flex flex-col items-center w-full" },
+              React.createElement('img', {
+                src: "assets/logo.png",
+                alt: "rawr",
+                className: "w-24 h-24 sm:w-36 sm:h-36 object-contain mb-6 opacity-90",
+                onError: (e) => { e.target.style.display = 'none'; }
+              }),
+              React.createElement('h1', { className: "text-5xl sm:text-6xl font-extrabold tracking-tighter italic text-white" },
+                "rawr", React.createElement('span', { className: "text-accent" }, ".xyz")
+              ),
+              React.createElement('p', { className: "text-white/25 text-xs tracking-[0.4em] uppercase mt-2 font-mono" }, "safety · execution"),
+              React.createElement('div', { className: "flex flex-wrap justify-center gap-4 mt-8 mb-8" },
+                React.createElement('a', { href: "https://discord.gg/eMpUQzFrNG", target: "_blank", rel: "noopener", className: "flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white/70 hover:text-white hover:border-orange-500/40 transition-all" },
+                  React.createElement('i', { className: "fa-brands fa-discord" }), "Discord"
+                ),
+                React.createElement('a', { href: "https://github.com/imcomingforyou6959-gif/rawr.xyz", target: "_blank", rel: "noopener", className: "flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white/70 hover:text-white hover:border-orange-500/40 transition-all" },
+                  React.createElement('i', { className: "fa-brands fa-github" }), "GitHub"
+                ),
+                React.createElement('a', { href: "https://www.youtube.com/@rawr.xy3", target: "_blank", rel: "noopener", className: "flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white/70 hover:text-white hover:border-orange-500/40 transition-all" },
+                  React.createElement('i', { className: "fa-brands fa-youtube" }), "YouTube"
                 )
-            );
-        };
+              ),
+              React.createElement(ScriptHero, null)
+            )
+            :
+            React.createElement(ScriptsLibrary, null),
 
-        // Render
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(React.createElement(App));
-    </script>
+          // footer
+          React.createElement('footer', { className: "mt-20 z-20 text-center w-full max-w-2xl" },
+            React.createElement('div', { className: "text-[10px] text-white/15 font-mono tracking-widest uppercase mb-3" }, "rawr.xyz · find a way"),
+            React.createElement('div', { className: "flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-white/25" },
+              React.createElement('span', { className: "cursor-pointer hover:text-white/60 transition-colors", onClick: () => setPage('home') }, "Home"),
+              React.createElement('span', { className: "cursor-pointer hover:text-white/60 transition-colors", onClick: () => setPage('scripts') }, "Scripts"),
+              React.createElement('a', { href: "/tos.html", className: "hover:text-white/60 transition-colors" }, "Terms"),
+              React.createElement('a', { href: "/privacy.html", className: "hover:text-white/60 transition-colors" }, "Privacy"),
+              React.createElement('a', { href: "https://discord.gg/eMpUQzFrNG", target: "_blank", rel: "noopener", className: "hover:text-white/60 transition-colors" }, "Support")
+            ),
+            React.createElement('p', { className: "text-[9px] text-white/10 mt-3" }, "© 2026 rawr.xyz")
+          )
+        )
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(App));
+  </script>
 </body>
 </html>
