@@ -12,201 +12,271 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
         body { 
-            background-color: #050505; 
+            margin: 0;
+            background-color: #0a0a0a;
             color: white; 
             font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
+
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/dharmx/walls/blob/main/calm/a_large_waterfall_with_fog_and_trees.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.5) saturate(0.8);
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+        }
+
         .tos-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
         }
+
         .section {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15, 15, 15, 0.4);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
         }
+
+        .section:hover {
+            background: rgba(20, 20, 20, 0.5);
+            border-color: rgba(239, 68, 68, 0.25);
+            transform: translateY(-2px);
+        }
+
         .section h2 {
-            color: #ef4444;
+            color: #fca5a5;
             font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: 700;
         }
+
         .section h3 {
-            color: #ef4444;
+            color: #fca5a5;
             font-size: 1.2rem;
             margin-top: 1rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
+
         .section p {
             color: rgba(255,255,255,0.7);
             line-height: 1.6;
             margin-bottom: 1rem;
         }
+
         .section ul {
             color: rgba(255,255,255,0.7);
             list-style-type: disc;
             padding-left: 1.5rem;
             margin-bottom: 1rem;
         }
+
         .section li {
             margin-bottom: 0.5rem;
         }
+
         .back-button {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(239,68,68,0.1);
-            border: 1px solid rgba(239,68,68,0.3);
+            background: rgba(239, 68, 68, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
-            color: #ef4444;
+            color: #fca5a5;
             text-decoration: none;
             transition: all 0.3s ease;
             margin-bottom: 2rem;
         }
+
         .back-button:hover {
-            background: rgba(239,68,68,0.2);
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
             transform: translateX(-5px);
         }
+
         .effective-date {
             text-align: center;
             color: rgba(255,255,255,0.4);
             font-size: 0.875rem;
             margin-bottom: 2rem;
         }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .fade-in-delay-1 { animation-delay: 0.2s; }
+        .fade-in-delay-2 { animation-delay: 0.4s; }
+        .fade-in-delay-3 { animation-delay: 0.6s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="tos-container">
-        <a href="/" class="back-button">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-        
-        <h1 class="text-4xl font-bold text-center mb-4">Terms of Service</h1>
-        <p class="effective-date">Effective Date: April 6, 2026</p>
-        
-        <div class="section">
-            <h2>1. Acceptance of Terms</h2>
-            <p>By accessing and using rawr.xyz ("the Website", "our service", "we", "us", or "our"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our services.</p>
+    <div class="bg-image"></div>
+    
+    <div class="content-layer">
+        <div class="tos-container">
+            <a href="/" class="back-button fade-in">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            
+            <h1 class="text-4xl font-bold text-center mb-4 fade-in fade-in-delay-1">Terms of Service</h1>
+            <p class="effective-date fade-in fade-in-delay-1">Effective Date: April 6, 2026</p>
+            
+            <div class="section fade-in fade-in-delay-2">
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing and using rawr.xyz ("the Website", "our service", "we", "us", or "our"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our services.</p>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-2">
+                <h2>2. Description of Service</h2>
+                <p>rawr.xyz provides a platform for exploits/scripts and support services. Our service includes:</p>
+                <ul>
+                    <li>Exploits/Scripts not provided with a executor</li>
+                    <li>24/7 customer support via Discord</li>
+                    <li>Community forums and discussions</li>
+                    <li>Regular updates and maintenance</li>
+                </ul>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-2">
+                <h2>3. User Responsibilities</h2>
+                <p>As a user of our service, you agree to:</p>
+                <ul>
+                    <li>Provide accurate and complete information when using our services</li>
+                    <li>Maintain the security of your account credentials</li>
+                    <li>Use the service only for lawful purposes</li>
+                    <li>Not attempt to bypass or disable any security features</li>
+                    <li>Not use the service to harass, abuse, or harm others</li>
+                    <li>Comply with all applicable laws and regulations</li>
+                </ul>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-2">
+                <h2>4. Prohibited Activities</h2>
+                <p>You are expressly prohibited from:</p>
+                <ul>
+                    <li>Using our scripts for malicious purposes :3</li>
+                    <li>Attempting to reverse engineer or decompile our exploits</li>
+                    <li>Distributing modified versions of our scripts</li>
+                    <li>Selling or reselling access to our services</li>
+                    <li>Using automated systems to access our services</li>
+                    <li>Impersonating staff members or other users</li>
+                    <li>Sharing exploit methods or cheating tools</li>
+                </ul>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-3">
+                <h2>5. Intellectual Property</h2>
+                <p>All content on rawr.xyz, including but not limited to scripts, code, graphics, logos, and documentation, is the property of rawr.xyz and is protected by copyright and other intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission.</p>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-3">
+                <h2>6. Disclaimer of Warranties</h2>
+                <p>OUR SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. WE DO NOT WARRANT THAT:</p>
+                <ul>
+                    <li>The service will be uninterrupted, timely, secure, or error-free</li>
+                    <li>The results obtained from using the service will be accurate or reliable</li>
+                    <li>Any errors in the software will be corrected</li>
+                </ul>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-3">
+                <h2>7. Limitation of Liability</h2>
+                <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, RAWR.XYZ SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM:</p>
+                <ul>
+                    <li>Your use or inability to use the service</li>
+                    <li>Any conduct or content of any third party on the service</li>
+                    <li>Unauthorized access, use, or alteration of your transmissions or content</li>
+                </ul>
+            </div>
+            
+            <div class="section fade-in fade-in-delay-3">
+                <h2>8. Indemnification</h2>
+                <p>You agree to indemnify, defend, and hold harmless rawr.xyz, its affiliates, officers, directors, employees, agents, and licensors from and against any and all claims, liabilities, damages, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising from your use of the service or violation of these Terms.</p>
+            </div>
+            
+            <div class="section">
+                <h2>9. Termination</h2>
+                <p>We reserve the right to terminate or suspend your access to our services immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach these Terms. Upon termination, your right to use the service will immediately cease.</p>
+            </div>
+            
+            <div class="section">
+                <h2>10. Changes to Terms</h2>
+                <p>We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+            </div>
+            
+            <div class="section">
+                <h2>11. Governing Law</h2>
+                <p>These Terms shall be governed and construed in accordance with the laws of your jurisdiction, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.</p>
+            </div>
+            
+            <div class="section">
+                <h2>12. Contact Information</h2>
+                <p>If you have any questions about these Terms, please contact us:</p>
+                <ul>
+                    <li>Discord: Join our community server</li>
+                    <li>Email: rawr.xyl@gmail.com</li>
+                    <li>Through our support ticket system</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>13. Age Requirement</h2>
+                <p>You must be at least 13 years old to use our services. By using rawr.xyz, you represent and warrant that you are at least 13 years of age.</p>
+            </div>
+            
+            <div class="section">
+                <h2>14. Privacy</h2>
+                <p>Your privacy is important to us. Please review our Privacy Policy to understand how we collect, use, and disclose information about you. By using our services, you consent to our collection and use of your information as described in the Privacy Policy.</p>
+            </div>
+            
+            <footer style="text-align: center; color: rgba(255,255,255,0.15); font-size: 0.75rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                <p>&copy; 2026 rawr.xyz - All Rights Reserved</p>
+                <p style="margin-top: 0.5rem;">
+                    <a href="/" style="color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fca5a5'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Home</a> |
+                    <a href="/tos" style="color: #fca5a5; text-decoration: none;">Terms of Service</a> |
+                    <a href="/privacy" style="color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fca5a5'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">Privacy Policy</a>
+                </p>
+            </footer>
         </div>
-        
-        <div class="section">
-            <h2>2. Description of Service</h2>
-            <p>rawr.xyz provides a platform for exploits/scripts and support services. Our service includes:</p>
-            <ul>
-                <li>Exploits/Scripts not provided with a executor</li>
-                <li>24/7 customer support via Discord</li>
-                <li>Community forums and discussions</li>
-                <li>Regular updates and maintenance</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>3. User Responsibilities</h2>
-            <p>As a user of our service, you agree to:</p>
-            <ul>
-                <li>Provide accurate and complete information when using our services</li>
-                <li>Maintain the security of your account credentials</li>
-                <li>Use the service only for lawful purposes</li>
-                <li>Not attempt to bypass or disable any security features</li>
-                <li>Not use the service to harass, abuse, or harm others</li>
-                <li>Comply with all applicable laws and regulations</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>4. Prohibited Activities</h2>
-            <p>You are expressly prohibited from:</p>
-            <ul>
-                <li>Using our scripts for malicious purposes :3</li>
-                <li>Attempting to reverse engineer or decompile our exploits</li>
-                <li>Distributing modified versions of our scripts</li>
-                <li>Selling or reselling access to our services</li>
-                <li>Using automated systems to access our services</li>
-                <li>Impersonating staff members or other users</li>
-                <li>Sharing exploit methods or cheating tools</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>5. Intellectual Property</h2>
-            <p>All content on rawr.xyz, including but not limited to scripts, code, graphics, logos, and documentation, is the property of rawr.xyz and is protected by copyright and other intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission.</p>
-        </div>
-        
-        <div class="section">
-            <h2>6. Disclaimer of Warranties</h2>
-            <p>OUR SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. WE DO NOT WARRANT THAT:</p>
-            <ul>
-                <li>The service will be uninterrupted, timely, secure, or error-free</li>
-                <li>The results obtained from using the service will be accurate or reliable</li>
-                <li>Any errors in the software will be corrected</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>7. Limitation of Liability</h2>
-            <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, RAWR.XYZ SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM:</p>
-            <ul>
-                <li>Your use or inability to use the service</li>
-                <li>Any conduct or content of any third party on the service</li>
-                <li>Unauthorized access, use, or alteration of your transmissions or content</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>8. Indemnification</h2>
-            <p>You agree to indemnify, defend, and hold harmless rawr.xyz, its affiliates, officers, directors, employees, agents, and licensors from and against any and all claims, liabilities, damages, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising from your use of the service or violation of these Terms.</p>
-        </div>
-        
-        <div class="section">
-            <h2>9. Termination</h2>
-            <p>We reserve the right to terminate or suspend your access to our services immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach these Terms. Upon termination, your right to use the service will immediately cease.</p>
-        </div>
-        
-        <div class="section">
-            <h2>10. Changes to Terms</h2>
-            <p>We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
-        </div>
-        
-        <div class="section">
-            <h2>11. Governing Law</h2>
-            <p>These Terms shall be governed and construed in accordance with the laws of your jurisdiction, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.</p>
-        </div>
-        
-        <div class="section">
-            <h2>12. Contact Information</h2>
-            <p>If you have any questions about these Terms, please contact us:</p>
-            <ul>
-                <li>Discord: Join our community server</li>
-                <li>Email: rawr.xyl@gmail.com</li>
-                <li>Through our support ticket system</li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2>13. Age Requirement</h2>
-            <p>You must be at least 13 years old to use our services. By using rawr.xyz, you represent and warrant that you are at least 13 years of age.</p>
-        </div>
-        
-        <div class="section">
-            <h2>14. Privacy</h2>
-            <p>Your privacy is important to us. Please review our Privacy Policy to understand how we collect, use, and disclose information about you. By using our services, you consent to our collection and use of your information as described in the Privacy Policy.</p>
-        </div>
-        
-        <footer class="text-center text-white/20 text-xs mt-8 pt-8 border-t border-white/10">
-            <p>&copy; 2026 rawr.xyz - All Rights Reserved</p>
-            <p class="mt-2">
-                <a href="/" class="hover:text-primary transition-colors">Home</a> |
-                <a href="/tos" class="text-primary">Terms of Service</a> |
-                <a href="/privacy" class="hover:text-primary transition-colors">Privacy Policy</a>
-            </p>
-        </footer>
     </div>
 </body>
 </html>
