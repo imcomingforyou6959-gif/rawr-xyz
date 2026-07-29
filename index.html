@@ -5,18 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>rawr.xyz — Home</title>
   <meta name="description" content="rawr.xyz made for u">
-  <meta name="theme-color" content="#0a0a0a">
+  <meta name="theme-color" content="#000000">
 
-  <!-- favicon -->
   <link rel="icon" type="image/png" href="assets/logo.png">
 
-  <!-- fonts & icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-  <!-- tailwind via cdn (stable) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -28,7 +25,7 @@
           },
           colors: {
             surface: '#0b0b0b',
-            accent: '#f97316',
+            accent: '#ef4444',
             muted: '#a1a1aa',
             border: 'rgba(255,255,255,0.06)',
           }
@@ -40,32 +37,24 @@
   <style>
     body {
       margin: 0;
-      background-color: #080808;
+      background-color: #0a0a0a;
       position: relative;
       overflow-x: hidden;
     }
-    body::before {
-      content: "";
+
+    .bg-image {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="1" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.035"/></svg>');
-      background-repeat: repeat;
-      pointer-events: none;
+      background-image: url('https://github.com/dharmx/walls/blob/main/calm/a_large_waterfall_with_fog_and_trees.jpg?raw=true');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: brightness(0.5) saturate(0.8);
       z-index: 0;
-    }
-
-    .rain-canvas {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      z-index: 0 !important;
-      pointer-events: none !important;
-      opacity: 0.12 !important;
+      opacity: 0.6;
     }
 
     .content-layer {
@@ -79,49 +68,112 @@
       padding: 2rem 1.5rem;
     }
 
-    .card-hover {
-      transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.1s ease;
+    .card-3d {
+      perspective: 1000px;
     }
-    .card-hover:hover {
-      border-color: rgba(249, 115, 22, 0.25);
-      background-color: rgba(255,255,255,0.02);
-      transform: translateY(-1px);
+
+    .card-3d-inner {
+      transition: transform 0.1s ease-out;
+      transform-style: preserve-3d;
+    }
+
+    .glass {
+      background: rgba(20, 20, 20, 0.3);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-hover:hover {
+      background: rgba(30, 30, 30, 0.4);
+      border-color: rgba(239, 68, 68, 0.3);
     }
 
     .nav-pill {
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
+      background: rgba(20, 20, 20, 0.3);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
+
     .nav-pill.active {
-      background: #f97316;
-      color: #0a0a0a;
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #ef4444;
       font-weight: 600;
     }
 
-    .glow-text {
-      text-shadow: 0 0 15px rgba(249,115,22,0.3);
+    .nav-pill:hover:not(.active) {
+      background: rgba(30, 30, 30, 0.4);
+      border-color: rgba(255, 255, 255, 0.15);
     }
 
-    hr.subtle {
-      border-color: rgba(255,255,255,0.05);
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
     }
 
-    button, a {
-      cursor: pointer;
+    .fade-in-delay-1 {
+      animation-delay: 0.3s;
+    }
+
+    .fade-in-delay-2 {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .float {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .pulse-red {
+      animation: pulseRed 2s infinite;
+    }
+
+    @keyframes pulseRed {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3); }
+      70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .script-card {
+      background: rgba(15, 15, 15, 0.4);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .script-card:hover {
+      background: rgba(20, 20, 20, 0.5);
+      border-color: rgba(239, 68, 68, 0.25);
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
   <div id="root"></div>
 
-  <!-- react / react-dom production -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 
   <script>
-    // safety check
     if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
       document.getElementById('root').innerHTML = `
-        <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0a0a0a;color:#f97316;font-family:sans-serif;">
+        <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0a0a0a;color:#ef4444;font-family:sans-serif;">
           <p>⚠️ Could not load core libraries. Check connection.</p>
         </div>`;
       throw new Error('React not available');
@@ -129,88 +181,11 @@
 
     const { useState, useEffect, useRef } = React;
 
-    const AmbientCanvas = ({ speed = 0.8 }) => {
-      const canvasRef = useRef(null);
-      const mouse = useRef({ x: 0, y: 0 });
-
-      useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let animationId;
-        let particles = [];
-        const MAX = 280;
-
-        const resize = () => {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        };
-
-        const createParticle = () => ({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          length: Math.random() * 14 + 6,
-          speed: Math.random() * 8 + 4,
-          opacity: Math.random() * 0.25 + 0.06,
-          drift: (Math.random() - 0.5) * 1.2,
-        });
-
-        for (let i = 0; i < MAX; i++) particles.push(createParticle());
-
-        const handleMouse = (e) => {
-          mouse.current.x = (e.clientX / window.innerWidth) - 0.5;
-          mouse.current.y = (e.clientY / window.innerHeight) - 0.5;
-        };
-
-        const draw = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          const offsetX = mouse.current.x * 45;
-          const tilt = mouse.current.x * 4;
-
-          particles.forEach(p => {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(249, 115, 22, ${p.opacity})`;
-            ctx.lineWidth = 1.2;
-            ctx.moveTo(p.x + offsetX, p.y);
-            ctx.lineTo(p.x + offsetX + tilt, p.y + p.length);
-            ctx.stroke();
-
-            p.y += p.speed * speed;
-            p.x += (p.drift + mouse.current.x * 7) * speed;
-
-            if (p.y > canvas.height + 15) {
-              p.y = -15;
-              p.x = Math.random() * canvas.width;
-            }
-            if (p.x > canvas.width) p.x = 0;
-            if (p.x < 0) p.x = canvas.width;
-          });
-
-          animationId = requestAnimationFrame(draw);
-        };
-
-        window.addEventListener('resize', resize);
-        window.addEventListener('mousemove', handleMouse);
-        resize();
-        draw();
-
-        return () => {
-          window.removeEventListener('resize', resize);
-          window.removeEventListener('mousemove', handleMouse);
-          cancelAnimationFrame(animationId);
-        };
-      }, [speed]);
-
-      return React.createElement('canvas', {
-        ref: canvasRef,
-        className: 'rain-canvas',
-        style: { filter: 'blur(1px)' }
-      });
-    };
-
-    const ScriptHero = () => {
+    const MainCard = () => {
       const [copied, setCopied] = useState(false);
       const [config, setConfig] = useState({ version: "v4.5.1", status: "operational", statusColor: "#22c55e" });
+      const cardRef = useRef(null);
+      const [rotate, setRotate] = useState({ x: 0, y: 0 });
 
       const scriptText = `loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()`;
 
@@ -224,6 +199,22 @@
           })
           .catch(() => setConfig({ version: "v4.5.1", status: "online", statusColor: "#22c55e" }));
       }, []);
+
+      const handleMouseMove = (e) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 15;
+        const rotateY = (centerX - x) / 15;
+        setRotate({ x: rotateX, y: rotateY });
+      };
+
+      const handleMouseLeave = () => {
+        setRotate({ x: 0, y: 0 });
+      };
 
       const copyToClipboard = async () => {
         try {
@@ -246,56 +237,70 @@
         }
       };
 
-      const statusDot = config.statusColor === "#22c55e" ? "bg-green-500" : (config.statusColor === "red" ? "bg-red-500" : "bg-yellow-500");
-
-      return React.createElement('div', { className: "w-full max-w-xl mx-auto mt-10" },
-        React.createElement('div', { className: "bg-[#0f0f0f] border border-[#ffffff10] rounded-2xl overflow-hidden shadow-2xl backdrop-blur-md" },
-          // header
-          React.createElement('div', { className: "flex items-center justify-between px-5 py-3 border-b border-[#ffffff10] bg-[#ffffff04]" },
+      return React.createElement('div', { className: "w-full max-w-xl mx-auto mt-8 card-3d fade-in fade-in-delay-2" },
+        React.createElement('div', {
+          ref: cardRef,
+          onMouseMove: handleMouseMove,
+          onMouseLeave: handleMouseLeave,
+          className: "card-3d-inner rounded-2xl overflow-hidden",
+          style: { 
+            transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+            background: 'rgba(15, 15, 15, 0.35)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)'
+          }
+        },
+          React.createElement('div', { 
+            className: "flex items-center justify-between px-5 py-3",
+            style: { 
+              borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+              background: 'rgba(10, 10, 10, 0.3)'
+            }
+          },
             React.createElement('div', { className: "flex items-center gap-3" },
               React.createElement('div', { className: "flex gap-1.5" },
-                React.createElement('span', { className: "w-2.5 h-2.5 rounded-full bg-[#ff5f56]" }),
-                React.createElement('span', { className: "w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" }),
-                React.createElement('span', { className: "w-2.5 h-2.5 rounded-full bg-[#27c93f]" })
+                React.createElement('span', { className: "w-2.5 h-2.5 rounded-full bg-red-500/80" }),
+                React.createElement('span', { className: "w-2.5 h-2.5 rounded-full bg-yellow-500/80" }),
+                React.createElement('span', { className: "w-2.5 h-2.5 rounded-full bg-green-500/80" })
               ),
-              React.createElement('span', { className: "text-xs font-mono text-white/40 bg-white/5 px-2 py-0.5 rounded-md" }, config.version)
+              React.createElement('span', { className: "text-xs font-mono text-white/50" }, config.version)
             ),
             React.createElement('div', { className: "flex items-center gap-2" },
-              React.createElement('span', { className: `relative flex h-2.5 w-2.5 ${statusDot} rounded-full` },
-                React.createElement('span', { className: "animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" })
-              ),
-              React.createElement('span', { className: "text-xs font-mono uppercase tracking-widest text-white/60 font-medium" }, config.status)
+              React.createElement('span', { className: "w-2 h-2 bg-green-400 rounded-full animate-pulse" }),
+              React.createElement('span', { className: "text-xs font-mono uppercase text-white/50" }, config.status)
             )
           ),
-          // body
           React.createElement('div', { className: "p-5" },
-            React.createElement('div', { className: "bg-black/40 border border-white/5 rounded-xl p-4 mb-4 font-mono text-sm text-orange-300/80 break-all select-all" },
+            React.createElement('div', { 
+              className: "rounded-xl p-4 mb-4 font-mono text-sm break-all select-all",
+              style: {
+                background: 'rgba(0, 0, 0, 0.4)',
+                border: '1px solid rgba(239, 68, 68, 0.15)',
+                color: '#fca5a5'
+              }
+            },
               scriptText
             ),
             React.createElement('button', {
               onClick: copyToClipboard,
-              className: `w-full py-3.5 rounded-xl font-semibold text-sm tracking-wide transition-all border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 text-white flex items-center justify-center gap-2 ${copied ? 'bg-green-500/20 border-green-500/40' : ''}`
+              className: `w-full py-3 rounded-xl font-semibold text-sm transition-all pulse-red ${
+                copied ? 'bg-green-500/20 border border-green-400/30 text-green-400' : 
+                'text-red-400 hover:text-red-300'
+              }`,
+              style: {
+                background: copied ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.1)',
+                backdropFilter: 'blur(8px)',
+                border: copied ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(239, 68, 68, 0.2)'
+              }
             },
-              copied ? '✓ Copied' : 'Copy script'
+              copied ? '✓ Copied' : 'Copy Script'
             )
           )
-        ),
-        // clean
-        React.createElement('div', { className: "mt-5 text-center text-xs text-white/30 font-mono flex flex-wrap items-center justify-center gap-x-5 gap-y-2" },
-          React.createElement('span', null, "Xeno"),
-          React.createElement('span', { className: "text-white/15" }, "•"),
-          React.createElement('span', null, "Velocity"),
-          React.createElement('span', { className: "text-white/15" }, "•"),
-          React.createElement('span', null, "Solara"),
-          React.createElement('span', { className: "text-white/15" }, "•"),
-          React.createElement('span', null, "Volt"),
-          React.createElement('span', { className: "text-white/15" }, "•"),
-          React.createElement('span', { className: "text-white/25 italic" }, "& more")
         )
       );
     };
 
-    const ScriptsLibrary = () => {
+    const ScriptsGrid = () => {
       const [copiedId, setCopiedId] = useState(null);
 
       const scripts = [
@@ -304,7 +309,7 @@
         { id: 3, name: "Prison Life", desc: "Prison", version: "4.9.7", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()', tags: ["prison"] },
         { id: 4, name: "Rivals", desc: "PvP", version: "4.9.6", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()', tags: ["pvp"] },
         { id: 5, name: "Dahood Copys", desc: "works on zee hood, der hood, dev hood and more", version: "idk", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/rawrrunsts.txt"))()', tags: ["experimental"] },
-        { id: 6, name: "nil", desc: "placeholder", version: "3.0.2", loadstring: 'nil', tags: ["placeholder"] }
+        { id: 6, name: "nil", desc: "placeholder", version: "nil", loadstring: 'nil', tags: ["placeholder"] }
       ];
 
       const copy = async (text, id) => {
@@ -327,28 +332,58 @@
       };
 
       return React.createElement('div', { className: "w-full max-w-6xl mx-auto px-4 py-12" },
-        React.createElement('h2', { className: "text-4xl font-bold text-white text-center mb-2 tracking-tight" },
-          "Script ", React.createElement('span', { className: "text-accent" }, "Library")
+        React.createElement('h2', { className: "text-4xl font-bold text-white text-center mb-2 fade-in" },
+          "Script ", React.createElement('span', { className: "text-red-400" }, "Library")
         ),
-        React.createElement('p', { className: "text-center text-white/40 text-sm mb-10 font-mono" }, "curated & frequently updated"),
+        React.createElement('p', { className: "text-center text-white/40 text-sm mb-10 font-mono fade-in fade-in-delay-1" }, "curated & updated"),
         React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" },
-          scripts.map(script =>
+          scripts.map((script, index) =>
             React.createElement('div', {
               key: script.id,
-              className: "bg-[#0f0f0f] border border-[#ffffff10] rounded-xl p-5 card-hover flex flex-col"
+              className: `script-card rounded-xl p-5 fade-in`,
+              style: { animationDelay: `${0.2 + index * 0.1}s` }
             },
               React.createElement('div', { className: "flex justify-between items-start mb-2" },
                 React.createElement('h3', { className: "text-white font-semibold text-lg" }, script.name),
-                React.createElement('span', { className: "text-xs bg-white/5 text-white/60 px-2 py-0.5 rounded font-mono" }, script.version)
+                React.createElement('span', { 
+                  className: "text-xs px-2 py-0.5 rounded font-mono",
+                  style: {
+                    background: 'rgba(239, 68, 68, 0.1)',
+                    color: '#fca5a5',
+                    border: '1px solid rgba(239, 68, 68, 0.15)'
+                  }
+                }, script.version)
               ),
               React.createElement('p', { className: "text-white/50 text-sm mb-3" }, script.desc),
               React.createElement('div', { className: "flex flex-wrap gap-2 mb-4" },
-                script.tags.map(tag => React.createElement('span', { key: tag, className: "text-[10px] bg-white/5 text-white/40 px-2 py-0.5 rounded uppercase tracking-wider" }, tag))
+                script.tags.map(tag => React.createElement('span', { 
+                  key: tag, 
+                  className: "text-[10px] px-2 py-0.5 rounded uppercase tracking-wider",
+                  style: {
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    color: 'rgba(255, 255, 255, 0.4)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)'
+                  }
+                }, tag))
               ),
-              React.createElement('div', { className: "bg-black/30 border border-white/5 rounded-lg p-3 mb-3 font-mono text-xs text-orange-300/70 break-all" }, script.loadstring),
+              React.createElement('div', { 
+                className: "rounded-lg p-3 mb-3 font-mono text-xs break-all",
+                style: {
+                  background: 'rgba(0, 0, 0, 0.4)',
+                  border: '1px solid rgba(239, 68, 68, 0.15)',
+                  color: '#fca5a5'
+                }
+              }, script.loadstring),
               React.createElement('button', {
                 onClick: () => copy(script.loadstring, script.id),
-                className: "mt-auto w-full py-2.5 bg-white/5 border border-white/10 hover:border-orange-500/40 text-white/70 hover:text-white rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2"
+                className: `w-full py-2.5 rounded-lg text-sm font-medium transition-all ${
+                  copiedId === script.id ? 'text-green-400' : 'text-red-400 hover:text-red-300'
+                }`,
+                style: {
+                  background: copiedId === script.id ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.08)',
+                  backdropFilter: 'blur(8px)',
+                  border: copiedId === script.id ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(239, 68, 68, 0.15)'
+                }
               },
                 copiedId === script.id ? '✓ Copied' : 'Copy'
               )
@@ -366,16 +401,22 @@
         { id: 'scripts', label: 'Scripts', icon: 'fa-scroll' }
       ];
 
-      return React.createElement('div', { className: "relative min-h-screen w-full bg-[#080808] text-white font-sans" },
-        React.createElement(AmbientCanvas, null),
+      return React.createElement('div', { className: "relative min-h-screen w-full text-white font-sans" },
+        React.createElement('div', { className: "bg-image" }),
+        
         React.createElement('div', { className: "content-layer" },
-          // navigation pills
-          React.createElement('div', { className: "relative z-20 flex gap-1.5 mb-10 bg-white/5 p-1 rounded-full border border-white/10 backdrop-blur-sm" },
+          React.createElement('div', { className: "relative z-20 flex gap-1.5 mb-8 p-1 rounded-full fade-in",
+            style: {
+              background: 'rgba(15, 15, 15, 0.3)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.08)'
+            }
+          },
             navItems.map(item =>
               React.createElement('button', {
                 key: item.id,
                 onClick: () => setPage(item.id),
-                className: `px-5 py-2 rounded-full text-sm font-medium flex items-center gap-2 nav-pill ${page === item.id ? 'active text-black' : 'text-white/50 hover:text-white/80'}`
+                className: `px-5 py-2 rounded-full text-sm font-medium flex items-center gap-2 nav-pill ${page === item.id ? 'active' : ''}`
               },
                 React.createElement('i', { className: `fas ${item.icon} text-xs` }),
                 item.label
@@ -383,44 +424,58 @@
             )
           ),
 
-          // page content
           page === 'home' ?
             React.createElement('div', { className: "flex flex-col items-center w-full" },
               React.createElement('img', {
                 src: "assets/logo.png",
                 alt: "rawr",
-                className: "w-24 h-24 sm:w-36 sm:h-36 object-contain mb-6 opacity-90",
+                className: "w-24 h-24 sm:w-36 sm:h-36 object-contain mb-6 float fade-in",
                 onError: (e) => { e.target.style.display = 'none'; }
               }),
-              React.createElement('h1', { className: "text-5xl sm:text-6xl font-extrabold tracking-tighter italic text-white" },
-                "rawr", React.createElement('span', { className: "text-accent" }, ".xyz")
+              React.createElement('h1', { className: "text-5xl sm:text-6xl font-extrabold tracking-tighter text-white/90 fade-in fade-in-delay-1" },
+                "rawr", React.createElement('span', { className: "text-red-400" }, ".xyz")
               ),
-              React.createElement('p', { className: "text-white/25 text-xs tracking-[0.4em] uppercase mt-2 font-mono" }, "safety · execution"),
-              React.createElement('div', { className: "flex flex-wrap justify-center gap-4 mt-8 mb-8" },
-                React.createElement('a', { href: "https://discord.gg/eMpUQzFrNG", target: "_blank", rel: "noopener", className: "flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white/70 hover:text-white hover:border-orange-500/40 transition-all" },
+              React.createElement('p', { className: "text-white/30 text-xs tracking-[0.4em] uppercase mt-2 font-mono fade-in fade-in-delay-2" }, "running the scene since early 2026"),
+              
+              React.createElement('div', { className: "flex flex-wrap justify-center gap-4 mt-8 mb-6 fade-in fade-in-delay-2" },
+                React.createElement('a', { 
+                  href: "https://discord.gg/eMpUQzFrNG", 
+                  target: "_blank", 
+                  rel: "noopener", 
+                  className: "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm text-white/70 hover:text-white/90 transition-all glass glass-hover"
+                },
                   React.createElement('i', { className: "fa-brands fa-discord" }), "Discord"
                 ),
-                React.createElement('a', { href: "https://github.com/imcomingforyou6959-gif/rawr.xyz", target: "_blank", rel: "noopener", className: "flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white/70 hover:text-white hover:border-orange-500/40 transition-all" },
+                React.createElement('a', { 
+                  href: "https://github.com/imcomingforyou6959-gif/rawr.xyz", 
+                  target: "_blank", 
+                  rel: "noopener", 
+                  className: "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm text-white/70 hover:text-white/90 transition-all glass glass-hover"
+                },
                   React.createElement('i', { className: "fa-brands fa-github" }), "GitHub"
                 ),
-                React.createElement('a', { href: "https://www.youtube.com/@rawr.xy3", target: "_blank", rel: "noopener", className: "flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white/70 hover:text-white hover:border-orange-500/40 transition-all" },
+                React.createElement('a', { 
+                  href: "https://www.youtube.com/@rawr.xy3", 
+                  target: "_blank", 
+                  rel: "noopener", 
+                  className: "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm text-white/70 hover:text-white/90 transition-all glass glass-hover"
+                },
                   React.createElement('i', { className: "fa-brands fa-youtube" }), "YouTube"
                 )
               ),
-              React.createElement(ScriptHero, null)
+              React.createElement(MainCard, null)
             )
             :
-            React.createElement(ScriptsLibrary, null),
+            React.createElement(ScriptsGrid, null),
 
-          // footer
-          React.createElement('footer', { className: "mt-20 z-20 text-center w-full max-w-2xl" },
-            React.createElement('div', { className: "text-[10px] text-white/15 font-mono tracking-widest uppercase mb-3" }, "rawr.xyz · find a way"),
+          React.createElement('footer', { className: "mt-16 z-20 text-center w-full max-w-2xl fade-in" },
+            React.createElement('div', { className: "text-[10px] text-white/20 font-mono tracking-widest uppercase mb-3" }, "rawr.xyz · find a way"),
             React.createElement('div', { className: "flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-white/25" },
-              React.createElement('span', { className: "cursor-pointer hover:text-white/60 transition-colors", onClick: () => setPage('home') }, "Home"),
-              React.createElement('span', { className: "cursor-pointer hover:text-white/60 transition-colors", onClick: () => setPage('scripts') }, "Scripts"),
-              React.createElement('a', { href: "/tos.html", className: "hover:text-white/60 transition-colors" }, "Terms"),
-              React.createElement('a', { href: "/privacy.html", className: "hover:text-white/60 transition-colors" }, "Privacy"),
-              React.createElement('a', { href: "https://discord.gg/eMpUQzFrNG", target: "_blank", rel: "noopener", className: "hover:text-white/60 transition-colors" }, "Support")
+              React.createElement('span', { className: "cursor-pointer hover:text-red-400 transition-colors", onClick: () => setPage('home') }, "Home"),
+              React.createElement('span', { className: "cursor-pointer hover:text-red-400 transition-colors", onClick: () => setPage('scripts') }, "Scripts"),
+              React.createElement('a', { href: "/tos.html", className: "hover:text-red-400 transition-colors" }, "Terms"),
+              React.createElement('a', { href: "/privacy.html", className: "hover:text-red-400 transition-colors" }, "Privacy"),
+              React.createElement('a', { href: "https://discord.gg/eMpUQzFrNG", target: "_blank", rel: "noopener", className: "hover:text-red-400 transition-colors" }, "Support")
             ),
             React.createElement('p', { className: "text-[9px] text-white/10 mt-3" }, "© 2026 rawr.xyz")
           )
