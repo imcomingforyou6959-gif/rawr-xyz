@@ -162,6 +162,48 @@
       border-color: rgba(239, 68, 68, 0.25);
       transform: translateY(-2px);
     }
+
+    .search-input {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: rgba(239, 68, 68, 0.4);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .tag-filter {
+      transition: all 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tag-filter:hover {
+      background: rgba(239, 68, 68, 0.15) !important;
+      border-color: rgba(239, 68, 68, 0.3) !important;
+    }
+
+    .tag-filter.active {
+      background: rgba(239, 68, 68, 0.2) !important;
+      border-color: rgba(239, 68, 68, 0.4) !important;
+      color: #fca5a5 !important;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   </style>
 </head>
 <body>
@@ -179,7 +221,7 @@
       throw new Error('React not available');
     }
 
-    const { useState, useEffect, useRef } = React;
+    const { useState, useEffect, useRef, useMemo } = React;
 
     const MainCard = () => {
       const [copied, setCopied] = useState(false);
@@ -300,19 +342,117 @@
       );
     };
 
+    const ScriptCard = ({ script, copiedId, onCopy }) => {
+      const [expanded, setExpanded] = useState(false);
+      const isCopied = copiedId === script.id;
+
+      return React.createElement('div', {
+        className: "script-card rounded-xl p-5 fade-in flex flex-col",
+        style: { animationDelay: `${0.1 * (script.id % 8)}s` }
+      },
+        // Header row
+        React.createElement('div', { className: "flex justify-between items-start mb-2 gap-2" },
+          React.createElement('div', { className: "min-w-0 flex-1" },
+            React.createElement('h3', { className: "text-white font-semibold text-lg truncate" }, script.name),
+            React.createElement('p', { className: "text-white/50 text-sm mt-0.5 line-clamp-1" }, script.desc)
+          ),
+          React.createElement('span', { 
+            className: "text-xs px-2 py-0.5 rounded font-mono shrink-0",
+            style: {
+              background: 'rgba(239, 68, 68, 0.1)',
+              color: '#fca5a5',
+              border: '1px solid rgba(239, 68, 68, 0.15)'
+            }
+          }, script.version)
+        ),
+
+        // Tags
+        React.createElement('div', { className: "flex flex-wrap gap-2 mb-3" },
+          script.tags.map(tag => React.createElement('span', { 
+            key: tag, 
+            className: "text-[10px] px-2 py-0.5 rounded uppercase tracking-wider",
+            style: {
+              background: 'rgba(255, 255, 255, 0.05)',
+              color: 'rgba(255, 255, 255, 0.4)',
+              border: '1px solid rgba(255, 255, 255, 0.08)'
+            }
+          }, tag))
+        ),
+
+        // Script preview (expandable)
+        React.createElement('div', {
+          className: "relative rounded-lg p-3 mb-3 font-mono text-xs break-all cursor-pointer transition-all",
+          style: {
+            background: 'rgba(0, 0, 0, 0.4)',
+            border: '1px solid rgba(239, 68, 68, 0.15)',
+            color: '#fca5a5',
+            maxHeight: expanded ? 'none' : '4.5rem',
+            overflow: 'hidden'
+          },
+          onClick: () => setExpanded(!expanded)
+        },
+          script.loadstring,
+          !expanded && React.createElement('div', {
+            className: "absolute bottom-0 left-0 right-0 h-8",
+            style: { background: 'linear-gradient(transparent, rgba(0,0,0,0.8))' }
+          }),
+          React.createElement('button', {
+            className: "absolute top-2 right-2 text-[10px] px-1.5 py-0.5 rounded text-white/40 hover:text-white/70 transition-colors",
+            style: { background: 'rgba(0,0,0,0.5)' },
+            onClick: (e) => { e.stopPropagation(); setExpanded(!expanded); }
+          }, expanded ? '−' : '+')
+        ),
+
+        // Copy button
+        React.createElement('button', {
+          onClick: () => onCopy(script.loadstring, script.id),
+          className: `mt-auto w-full py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+            isCopied ? 'text-green-400' : 'text-red-400 hover:text-red-300'
+          }`,
+          style: {
+            background: isCopied ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.08)',
+            backdropFilter: 'blur(8px)',
+            border: isCopied ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(239, 68, 68, 0.15)'
+          }
+        },
+          React.createElement('i', { className: `fas ${isCopied ? 'fa-check' : 'fa-copy'} text-xs` }),
+          isCopied ? 'Copied' : 'Copy Script'
+        )
+      );
+    };
+
     const ScriptsGrid = () => {
       const [copiedId, setCopiedId] = useState(null);
+      const [searchQuery, setSearchQuery] = useState('');
+      const [activeTag, setActiveTag] = useState(null);
 
       const scripts = [
-        { id: 1, name: "Universal Old", desc: "Legacy", version: "2.3.1", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Universal.lua", true))()', tags: ["stable"] },
-        { id: 2, name: "Hellmet", desc: "little old project", version: "1.1.5", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Hellmet.lua"))()', tags: ["esp", "aim"] },
-        { id: 3, name: "Prison Life", desc: "Prison", version: "4.9.8.9", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()', tags: ["prison"] },
-        { id: 4, name: "Rivals", desc: "PvP", version: "4.6.3", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()', tags: ["pvp"] },
-        { id: 5, name: "Dahood Copys", desc: "works on zee hood, der hood, dev hood and more", version: "idk", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/rawrrunsts.txt"))()', tags: ["experimental"] },
-        { id: 6, name: "TTK Testing", desc: "ttk testing for you", version: "1.0.3", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/ttk.txt"))()', tags: ["hvh son"] },
-        { id: 7, name: "Arsenal", desc: "arsenal iguess", version: "1.0.0", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/arc.txt"))()', tags: ["arsenal"] }
-        { id: 8, name: "Slendytubbies vs Redux", desc: "lard tub tub", version: "1.0.0", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/tubbies.txt", true))()', tags: ["tubbiee"] }
+        { id: 1, name: "Universal Old", desc: "Legacy script, maintained for compatibility", version: "2.3.1", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Universal.lua", true))()', tags: ["stable", "legacy"] },
+        { id: 2, name: "Hellmet", desc: "Little old project with ESP & aim assist", version: "1.1.5", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/Hellmet.lua"))()', tags: ["esp", "aim"] },
+        { id: 3, name: "Prison Life", desc: "Full featured Prison Life script", version: "4.9.8.9", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()', tags: ["prison", "stable"] },
+        { id: 4, name: "Rivals", desc: "PvP focused combat script", version: "4.6.3", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/file.txt", true))()', tags: ["pvp", "combat"] },
+        { id: 5, name: "Dahood Copies", desc: "Works on zee hood, der hood, dev hood and more", version: "idk", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/rawrrunsts.txt"))()', tags: ["experimental", "hood"] },
+        { id: 6, name: "TTK Testing", desc: "TTK testing tool for you", version: "1.0.3", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/ttk.txt"))()', tags: ["hvh", "testing"] },
+        { id: 7, name: "Arsenal", desc: "Arsenal script I guess", version: "1.0.0", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/arc.txt"))()', tags: ["arsenal", "fps"] },
+        { id: 8, name: "Slendytubbies vs Redux", desc: "Lard tub tub approved", version: "1.0.0", loadstring: 'loadstring(game:HttpGet("https://rawrs.zapto.org/tubbies.txt", true))()', tags: ["tubbiee", "horror"] }
       ];
+
+      const allTags = useMemo(() => {
+        const tags = new Set();
+        scripts.forEach(s => s.tags.forEach(t => tags.add(t)));
+        return Array.from(tags).sort();
+      }, []);
+
+      const filteredScripts = useMemo(() => {
+        return scripts.filter(script => {
+          const matchesSearch = searchQuery === '' || 
+            script.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            script.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            script.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+          const matchesTag = !activeTag || script.tags.includes(activeTag);
+          return matchesSearch && matchesTag;
+        });
+      }, [searchQuery, activeTag]);
 
       const copy = async (text, id) => {
         try {
@@ -334,64 +474,95 @@
       };
 
       return React.createElement('div', { className: "w-full max-w-6xl mx-auto px-4 py-12" },
-        React.createElement('h2', { className: "text-4xl font-bold text-white text-center mb-2 fade-in" },
-          "Script ", React.createElement('span', { className: "text-red-400" }, "Library")
+        // Header
+        React.createElement('div', { className: "text-center mb-10" },
+          React.createElement('h2', { className: "text-4xl font-bold text-white mb-2 fade-in" },
+            "Script ", React.createElement('span', { className: "text-red-400" }, "Library")
+          ),
+          React.createElement('p', { className: "text-white/40 text-sm font-mono fade-in fade-in-delay-1" },
+            `${scripts.length} scripts · curated & updated`
+          )
         ),
-        React.createElement('p', { className: "text-center text-white/40 text-sm mb-10 font-mono fade-in fade-in-delay-1" }, "curated & updated"),
-        React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" },
-          scripts.map((script, index) =>
-            React.createElement('div', {
-              key: script.id,
-              className: `script-card rounded-xl p-5 fade-in`,
-              style: { animationDelay: `${0.2 + index * 0.1}s` }
+
+        // Search & filter bar
+        React.createElement('div', { className: "mb-8 space-y-4 fade-in fade-in-delay-1" },
+          // Search input
+          React.createElement('div', { className: "relative max-w-md mx-auto" },
+            React.createElement('i', { className: "fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-sm" }),
+            React.createElement('input', {
+              type: 'text',
+              placeholder: 'Search scripts, tags, or descriptions...',
+              value: searchQuery,
+              onChange: (e) => setSearchQuery(e.target.value),
+              className: "search-input w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white/80 placeholder-white/30"
+            }),
+            searchQuery && React.createElement('button', {
+              onClick: () => setSearchQuery(''),
+              className: "absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
             },
-              React.createElement('div', { className: "flex justify-between items-start mb-2" },
-                React.createElement('h3', { className: "text-white font-semibold text-lg" }, script.name),
-                React.createElement('span', { 
-                  className: "text-xs px-2 py-0.5 rounded font-mono",
-                  style: {
-                    background: 'rgba(239, 68, 68, 0.1)',
-                    color: '#fca5a5',
-                    border: '1px solid rgba(239, 68, 68, 0.15)'
-                  }
-                }, script.version)
-              ),
-              React.createElement('p', { className: "text-white/50 text-sm mb-3" }, script.desc),
-              React.createElement('div', { className: "flex flex-wrap gap-2 mb-4" },
-                script.tags.map(tag => React.createElement('span', { 
-                  key: tag, 
-                  className: "text-[10px] px-2 py-0.5 rounded uppercase tracking-wider",
-                  style: {
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    color: 'rgba(255, 255, 255, 0.4)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)'
-                  }
-                }, tag))
-              ),
-              React.createElement('div', { 
-                className: "rounded-lg p-3 mb-3 font-mono text-xs break-all",
-                style: {
-                  background: 'rgba(0, 0, 0, 0.4)',
-                  border: '1px solid rgba(239, 68, 68, 0.15)',
-                  color: '#fca5a5'
-                }
-              }, script.loadstring),
+              React.createElement('i', { className: "fas fa-times text-xs" })
+            )
+          ),
+
+          // Tag filters
+          React.createElement('div', { className: "flex flex-wrap justify-center gap-2" },
+            React.createElement('button', {
+              onClick: () => setActiveTag(null),
+              className: `tag-filter text-[11px] px-3 py-1.5 rounded-lg uppercase tracking-wider transition-all ${
+                !activeTag ? 'active' : ''
+              }`,
+              style: {
+                background: 'rgba(255, 255, 255, 0.05)',
+                color: activeTag ? 'rgba(255, 255, 255, 0.4)' : '#fca5a5',
+                border: activeTag ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid rgba(239, 68, 68, 0.4)'
+              }
+            }, 'All'),
+            allTags.map(tag =>
               React.createElement('button', {
-                onClick: () => copy(script.loadstring, script.id),
-                className: `w-full py-2.5 rounded-lg text-sm font-medium transition-all ${
-                  copiedId === script.id ? 'text-green-400' : 'text-red-400 hover:text-red-300'
+                key: tag,
+                onClick: () => setActiveTag(activeTag === tag ? null : tag),
+                className: `tag-filter text-[11px] px-3 py-1.5 rounded-lg uppercase tracking-wider transition-all ${
+                  activeTag === tag ? 'active' : ''
                 }`,
                 style: {
-                  background: copiedId === script.id ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.08)',
-                  backdropFilter: 'blur(8px)',
-                  border: copiedId === script.id ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(239, 68, 68, 0.15)'
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  color: activeTag === tag ? '#fca5a5' : 'rgba(255, 255, 255, 0.4)',
+                  border: activeTag === tag ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(255, 255, 255, 0.08)'
                 }
-              },
-                copiedId === script.id ? '✓ Copied' : 'Copy'
-              )
+              }, tag)
             )
           )
-        )
+        ),
+
+        // Results info
+        (searchQuery || activeTag) && React.createElement('div', { className: "text-center mb-4 text-xs text-white/40 font-mono" },
+          `Found ${filteredScripts.length} script${filteredScripts.length !== 1 ? 's' : ''}`,
+          searchQuery && ` matching "${searchQuery}"`,
+          activeTag && ` tagged "${activeTag}"`,
+          React.createElement('button', {
+            onClick: () => { setSearchQuery(''); setActiveTag(null); },
+            className: "ml-3 text-red-400/70 hover:text-red-400 underline transition-colors"
+          }, 'Clear filters')
+        ),
+
+        // Grid
+        filteredScripts.length > 0 ?
+          React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" },
+            filteredScripts.map(script =>
+              React.createElement(ScriptCard, {
+                key: script.id,
+                script: script,
+                copiedId: copiedId,
+                onCopy: copy
+              })
+            )
+          )
+          :
+          React.createElement('div', { className: "text-center py-16 fade-in" },
+            React.createElement('i', { className: "fas fa-search text-4xl text-white/10 mb-4" }),
+            React.createElement('p', { className: "text-white/30 text-sm" }, 'No scripts found'),
+            React.createElement('p', { className: "text-white/20 text-xs mt-1" }, 'Try a different search or filter')
+          )
       );
     };
 
