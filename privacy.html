@@ -6,17 +6,17 @@
     <title>Privacy Policy - rawr.xyz</title>
     <meta name="description" content="Privacy Policy for rawr.xyz - How we protect your data">
     <meta name="theme-color" content="#ef4444">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        
-        body { 
+
+        body {
             margin: 0;
             background-color: #0a0a0a;
-            color: white; 
+            color: white;
             font-family: 'Inter', sans-serif;
             position: relative;
             overflow-x: hidden;
@@ -170,39 +170,38 @@
 </head>
 <body>
     <div class="bg-image"></div>
-    
+
     <div class="content-layer">
         <div class="privacy-container">
             <a href="/" class="back-button fade-in">
                 <i class="fas fa-arrow-left"></i>
                 Back to Home
             </a>
-            
+
             <h1 class="text-5xl font-bold text-center mb-4 fade-in fade-in-delay-1">Privacy Policy</h1>
-            <p class="effective-date fade-in fade-in-delay-1">Last Updated: November 1, 2026 | Effective Date: November 1, 2026</p>
-            
+            <p class="effective-date fade-in fade-in-delay-1">Last Updated: November 2, 2026 | Effective Date: November 2, 2026</p>
+
             <div class="section fade-in fade-in-delay-2">
                 <h2>1. What Data We Store</h2>
-                <p>We have recently updated our privacy practices to enhance security. Here's what we currently handle:</p>
-                
-                <h3>1.1 Future Data Storage (Security Purposes)</h3>
+                <p>We keep data collection deliberately minimal. Here is what we handle:</p>
+
+                <h3>1.1 Data Stored (Security Purposes)</h3>
                 <ul>
-                    <li><strong>User Information:</strong> May be stored in the near future as part of our strengthened security measures</li>
-                    <li><strong>Violation Records:</strong> Only users who violate our <a href="https://rawrs.zapto.org/tos" style="color: #fca5a5; text-decoration: underline;">Terms of Service</a> will have their information retained</li>
-                    <li><strong>Hardware IDs:</strong> Stored for the purpose of banning users who violate our terms</li>
-                    <li><strong>Account Information:</strong> Username, display name, and user ID may be retained for violators only</li>
+                    <li><strong>Violation Records:</strong> Only users who violate our <a href="https://rawrs.zapto.org/tos" style="color: #fca5a5; text-decoration: underline;">Terms of Service</a> have their information retained</li>
+                    <li><strong>Hardware IDs:</strong> Stored only to ban users who violate our terms</li>
+                    <li><strong>Account Information:</strong> Username, display name, and user ID are retained for violators only</li>
                 </ul>
-                
+
                 <h3>1.2 What We Do NOT Collect</h3>
                 <ul>
                     <li><strong>Data from Compliant Users:</strong> If you follow our Terms of Service, no personal information is stored about you</li>
                     <li><strong>Browsing Data:</strong> No cookies or tracking pixels are used for advertising</li>
                 </ul>
             </div>
-            
+
             <div class="section fade-in fade-in-delay-2">
                 <h2>2. Execution Logs</h2>
-                <p>When you execute our scripts, we generate execution logs for security purposes. <strong>These logs are not saved and are not used in any way except for security.</strong> The following information is shown on execution:</p>
+                <p>When you execute our scripts, we generate execution logs for security purposes. <strong>These logs are not saved and are not used for anything other than security.</strong> The following information is shown on execution:</p>
                 <ul>
                     <li><strong>Username:</strong> Your account username</li>
                     <li><strong>Display Name:</strong> Your account display name</li>
@@ -214,9 +213,31 @@
                     <p style="color: rgba(255,255,255,0.8);"><strong>🔒 Important:</strong> These execution logs are ephemeral — they are not stored, saved, or used for any purpose other than security enforcement. They are never sold, shared, or retained beyond the active execution session.</p>
                 </div>
             </div>
-            
+
             <div class="section fade-in fade-in-delay-2">
-                <h2>3. How We Use Stored Data</h2>
+                <h2>3. User-Agent and Client Checks</h2>
+                <p>To protect our community, we perform a lightweight inspection of the <strong>User-Agent</strong> header sent by your client when a session is created. This is used solely to detect blacklisted clients and impersonation attempts.</p>
+
+                <h3>3.1 What We Check</h3>
+                <ul>
+                    <li><strong>Blacklisted Clients:</strong> Known bot/scripted clients (for example <code>curl</code>, <code>wget</code>, <code>python-requests</code>, and similar tools) are blocked. When one is detected, a violation record is created and forwarded to our security log.</li>
+                    <li><strong>Executor Mismatch:</strong> If a client claims to be a known executor but its User-Agent identifies a <em>different</em> known executor, this is treated as a mismatch and reported.</li>
+                </ul>
+
+                <h3>3.2 What We Do NOT Do</h3>
+                <ul>
+                    <li><strong>No Reporting of Normal Clients:</strong> Standard Roblox clients, browsers, mobile devices, and other ordinary User-Agents are ignored. They are <strong>not</strong> reported and <strong>not</strong> stored.</li>
+                    <li><strong>No Profiling:</strong> We do not build profiles from User-Agent strings, and we do not use them for advertising, analytics, or tracking.</li>
+                    <li><strong>No Reporting Without a Blacklist Match:</strong> A report is only generated when the client matches the hard-block list or is a confirmed executor mismatch. Unverifiable or unknown User-Agents are simply allowed and discarded.</li>
+                </ul>
+
+                <div class="highlight">
+                    <p style="color: rgba(255,255,255,0.8);"><strong>🛡️ Important:</strong> Normal Roblox clients and browsers will never trigger a report. Only clients on the blacklist, or clients whose User-Agent does not match the executor they claim, are logged.</p>
+                </div>
+            </div>
+
+            <div class="section fade-in fade-in-delay-2">
+                <h2>4. How We Use Stored Data</h2>
                 <p>Any data we store is used exclusively for:</p>
                 <ul>
                     <li><strong>Security Enforcement:</strong> Identifying and blocking users who violate our Terms of Service</li>
@@ -227,20 +248,20 @@
                     <p style="color: rgba(255,255,255,0.8);"><strong>🛡️ Important:</strong> If you are not in violation of our Terms of Service, you have nothing to worry about. Your information is not stored.</p>
                 </div>
             </div>
-            
+
             <div class="section fade-in fade-in-delay-2">
-                <h2>4. Data Storage and Security</h2>
+                <h2>5. Data Storage and Security</h2>
                 <p>We take data security seriously:</p>
                 <ul>
                     <li><strong>Encryption:</strong> All stored data is encrypted at rest and in transit</li>
                     <li><strong>Access Control:</strong> Only authorized staff can access violation records</li>
-                    <li><strong>Minimal Retention:</strong> Data is only retained for active violations</li>
+                    <li><strong>Minimal Retention:</strong> Data is retained only for active violations</li>
                     <li><strong>Regular Audits:</strong> We periodically review stored data to ensure accuracy</li>
                 </ul>
             </div>
-            
+
             <div class="section fade-in fade-in-delay-3">
-                <h2>5. Data Sharing and Disclosure</h2>
+                <h2>6. Data Sharing and Disclosure</h2>
                 <p>We do not sell, trade, or rent any information to third parties. The limited data we may store is:</p>
                 <ul>
                     <li><strong>Never Sold:</strong> We do not monetize user data in any way</li>
@@ -249,33 +270,33 @@
                 </ul>
                 <p class="text-sm mt-2" style="color: rgba(255,255,255,0.6);">🔒 <strong>We have never and will never sell any user information.</strong></p>
             </div>
-            
+
             <div class="section fade-in fade-in-delay-3">
-                <h2>6. Your Rights and Choices</h2>
+                <h2>7. Your Rights and Choices</h2>
                 <p>You maintain full rights over any data we might store:</p>
                 <ul>
                     <li><strong>Access:</strong> Request information about any data stored about you</li>
                     <li><strong>Deletion:</strong> Request removal of your data if you are not in violation</li>
                     <li><strong>Opt-out:</strong> Simply follow our Terms of Service and no data is stored</li>
                 </ul>
-                
+
                 <div class="highlight">
                     <p style="color: rgba(255,255,255,0.8);"><strong>📧 To exercise your rights:</strong> Contact us via Discord or email rawr.xyl@gmail.com. Since we only store data on violators, most requests can be fulfilled immediately.</p>
                 </div>
             </div>
-            
+
             <div class="section">
-                <h2>7. Cookies and Tracking</h2>
+                <h2>8. Cookies and Tracking</h2>
                 <p>Our website uses minimal cookies:</p>
                 <ul>
                     <li><strong>No Analytics:</strong> We do not use Google Analytics or similar tracking</li>
-                    <li><strong>No Advertising:</strong> We don't run ads or use tracking pixels</li>
+                    <li><strong>No Advertising:</strong> We do not run ads or use tracking pixels</li>
                     <li><strong>Session Only:</strong> Any temporary cookies expire when you close your browser</li>
                 </ul>
             </div>
-            
+
             <div class="section">
-                <h2>8. Third-Party Services</h2>
+                <h2>9. Third-Party Services</h2>
                 <p>We rely on minimal third-party services:</p>
                 <ul>
                     <li><strong>GitHub:</strong> For hosting script files and version control</li>
@@ -283,32 +304,32 @@
                 </ul>
                 <p>Each service has its own privacy policy. We encourage you to review them.</p>
             </div>
-            
+
             <div class="section">
-                <h2>9. Children's Privacy</h2>
+                <h2>10. Children's Privacy</h2>
                 <p>Our services are not directed to children under 13. We do not knowingly collect any personal information from children under 13.</p>
             </div>
-            
+
             <div class="section">
-                <h2>10. Changes to This Privacy Policy</h2>
+                <h2>11. Changes to This Privacy Policy</h2>
                 <p>We may update this policy as our services evolve. Changes will be posted here with an updated date. Major changes will be announced on our Discord server. By continuing to use our services, you agree to the latest version of this policy.</p>
             </div>
-            
+
             <div class="section">
-                <h2>11. Contact Information</h2>
+                <h2>12. Contact Information</h2>
                 <p>Questions about this policy or your data? Reach out:</p>
                 <ul>
                     <li><strong>Discord:</strong> Join our community server</li>
                     <li><strong>Email:</strong> rawr.xyl@gmail.com</li>
-                    <li><strong>Response Time:</strong> Usually within 24-48 hours</li>
+                    <li><strong>Response Time:</strong> Usually within 24–48 hours</li>
                 </ul>
             </div>
-            
+
             <div class="section">
-                <h2>12. Consent</h2>
+                <h2>13. Consent</h2>
                 <p>By using our website and scripts, you acknowledge this privacy policy. If you follow our Terms of Service, your privacy is protected. If you disagree with any part of this policy, please discontinue use of our services.</p>
             </div>
-            
+
             <footer style="text-align: center; color: rgba(255,255,255,0.15); font-size: 0.75rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
                 <p>&copy; 2026 rawr.xyz - All Rights Reserved</p>
                 <p style="margin-top: 0.5rem;">
