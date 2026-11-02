@@ -255,7 +255,7 @@
             ),
             React.createElement('h3', { className: "text-white/90 font-semibold text-base" }, "Main script — heads up")
           ),
-          // Body
+
           React.createElement('div', { className: "px-5 py-5" },
             React.createElement('p', { className: "text-white/70 text-sm leading-relaxed mb-3" },
               "Are you sure you would like to copy this to your clipboard?"
@@ -472,7 +472,7 @@
             }
           }, tag))
         ),
-
+                                 
         React.createElement('div', {
           className: "relative rounded-lg p-3 mb-3 font-mono text-xs break-all cursor-pointer transition-all",
           style: {
@@ -496,7 +496,6 @@
           }, expanded ? '−' : '+')
         ),
 
-        // Copy button
         React.createElement('button', {
           onClick: () => onCopy(script.loadstring, script.id),
           className: `mt-auto w-full py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${
